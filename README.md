@@ -4,6 +4,22 @@ Contains all the work done for my Thesis for
 *Mathematical Sciences - Logic Track* at the
 [University of Utrecht](https://www.uu.nl/masters/en/mathematical-sciences).
 
+## Commands
+
+To initialize this project, run the following command (only tested on MacOS
+with `zsh`):
+
+```(shell)
+. ./init.sh
+```
+
+To build the thesis, run:
+
+```(shell)
+build-thesis
+```
+
+
 ## Folder Structure
  - `impl/` - Implementations of the ideas in the thesis.
  - `tools/` - Contains some automation scripts and applications for convenience.
