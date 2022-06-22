@@ -1,0 +1,72 @@
+cabal-version: 1.12
+
+-- This file has been generated from package.yaml by hpack version 0.34.4.
+--
+-- see: https://github.com/sol/hpack
+
+name:           build-thesis
+version:        0.1.0.0
+description:    A simple Haskell application to build my masters thesis.
+author:         Roel Hemerik
+maintainer:     haskell@roelweb.com
+copyright:      Roel Hemerik
+build-type:     Simple
+
+library
+  exposed-modules:
+      Tools.Bib.BibTex
+      Tools.Bib.Doi
+      Tools.Bib.IO
+      Tools.Build.Bibliography
+  other-modules:
+      Paths_build_thesis
+  hs-source-dirs:
+      src
+  build-depends:
+      HaTeX
+    , aeson
+    , base >=4.7 && <5
+    , bytestring
+    , containers
+    , data-default
+    , directory
+    , exceptions
+    , filepath
+    , generic-lens
+    , lens
+    , megaparsec
+    , modern-uri
+    , mtl
+    , prettyprinter
+    , text
+    , transformers
+    , wreq
+    , yaml
+  default-language: Haskell2010
+
+executable build-thesis
+  main-is: app/Main.hs
+  other-modules:
+      Paths_build_thesis
+  build-depends:
+      HaTeX
+    , aeson
+    , base
+    , build-thesis
+    , bytestring
+    , containers
+    , data-default
+    , directory
+    , exceptions
+    , filepath
+    , generic-lens
+    , lens
+    , megaparsec
+    , modern-uri
+    , mtl
+    , prettyprinter
+    , text
+    , transformers
+    , wreq
+    , yaml
+  default-language: Haskell2010

@@ -1,0 +1,165 @@
+# ---------------------------------------------------------------------------- #
+#   Local Configuration Files                                                  #
+# ---------------------------------------------------------------------------- #
+
+# Local environment variables.
+.env.local
+
+# ---------------------------------------------------------------------------- #
+#   MacOS                                                                      #
+# ---------------------------------------------------------------------------- #
+
+# General
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Icon must end with two \r
+Icon
+
+# Thumbnails
+._*
+
+# Directories potentially created on remote AFP share
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+# iCloud generated files
+*.icloud
+
+# ---------------------------------------------------------------------------- #
+#   Python                                                                     #
+# ---------------------------------------------------------------------------- #
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# ---------------------------------------------------------------------------- #
+#   Haskell                                                                    #
+# ---------------------------------------------------------------------------- #
+
+dist
+dist-*
+cabal-dev
+*.o
+*.hi
+*.hie
+*.chi
+*.chs.h
+*.dyn_o
+*.dyn_hi
+.hpc
+.hsenv
+.cabal-sandbox/
+cabal.sandbox.config
+*.prof
+*.aux
+*.hp
+*.eventlog
+.stack-work/
+cabal.project.local
+cabal.project.local~
+.HTF/
+.ghc.environment.*
+
+# ---------------------------------------------------------------------------- #
+#   LaTeX                                                                      #
+# ---------------------------------------------------------------------------- #
+
+# TeX-document output
+/tex/**/out
+
+# Intermediate files
+*.synctex.gz
+*-converted-to.*
+
+# ---------------------------------------------------------------------------- #
+#   Intellij                                                                   #
+# ---------------------------------------------------------------------------- #
+
+# User-specific stuff
+.idea/**/workspace.xml
+.idea/**/tasks.xml
+.idea/**/usage.statistics.xml
+.idea/**/dictionaries
+.idea/**/shelf
+
+# AWS User-specific
+.idea/**/aws.xml
+
+# Generated files
+.idea/**/contentModel.xml
+
+# Sensitive or high-churn files
+.idea/**/dataSources/
+.idea/**/dataSources.ids
+.idea/**/dataSources.local.xml
+.idea/**/sqlDataSources.xml
+.idea/**/dynamic.xml
+.idea/**/uiDesigner.xml
+.idea/**/dbnavigator.xml
+
+# Gradle
+.idea/**/gradle.xml
+.idea/**/libraries
+
+# CMake
+cmake-build-*/
+
+# Mongo Explorer plugin
+.idea/**/mongoSettings.xml
+
+# File-based project format
+*.iws
+
+# IntelliJ
+out/
+
+# mpeltonen/sbt-idea plugin
+.idea_modules/
+
+# JIRA plugin
+atlassian-ide-plugin.xml
+
+# Cursive Clojure plugin
+.idea/replstate.xml
+
+# SonarLint plugin
+.idea/sonarlint/
+
+# Crashlytics plugin (for Android Studio and IntelliJ)
+com_crashlytics_export_strings.xml
+crashlytics.properties
+crashlytics-build.properties
+fabric.properties
+
+# Editor-based Rest Client
+.idea/httpRequests
+
+# Android studio 3.1+ serialized cache file
+.idea/caches/build_file_checksums.ser
+
+# Sonarlint plugin
+.idea/**/sonarlint/
+
+# SonarQube Plugin
+.idea/**/sonarIssues.xml
+
+# Markdown Navigator plugin
+.idea/**/markdown-navigator.xml
+.idea/**/markdown-navigator-enh.xml
+.idea/**/markdown-navigator/
+
+# Cache file creation bug
+.idea/$CACHE_FILE$
+
+# CodeStream plugin
+.idea/codestream.xml
+
+# Azure Toolkit for IntelliJ plugin
+.idea/**/azureSettings.xml

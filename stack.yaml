@@ -1,0 +1,6 @@
+# Dependency resolver
+resolver: github:commercialhaskell/stackage-snapshots:lts/19/4.yaml
+
+# Loading the different Stack packages from the implementations.
+packages:
+  - tools/build-thesis

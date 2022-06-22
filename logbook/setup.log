@@ -1,0 +1,40 @@
+[2022-06-18]
+Setting up the workspace for the thesis project.
+
+I try to make and structure a single Git-repository (or something similar)
+that contains everything I will write during the thesis project. It has the
+following requirements:
+  1. Allow for simple version control (Probably just one branch. Mainly to
+     ensure that nothing gets lost if anything goes wrong.)
+  2. Allow me to quickly start a new working environment on any computer.
+     This because I don't have a laptop and it is possible that I will work
+     on my thesis at my office and on the UU.
+  3. Allow the supervisor(s) to access my ongoing work quickly.
+  4. (At the end of the project.) Have a nice way show of my working style
+     to future employers.
+
+I would also like to have some helper-scripts to automate the annoying parts of
+book-keeping, mainly to counteract my chaotic nature. This usually prevents me
+to make mistakes in the bookkeeping part of writing a thesis, which can safe
+me a lot of time.
+
+I also start at the preperation of structure of the bibliography. I use the
+structure following PhD. thesis as an example:
+https://github.com/basnijholt/thesis
+
+I make some README.md files to document the choices I make for the structure
+of the project.
+
+[2022-06-19]
+Continue setting up the structure.
+
+Setting up Python and Haskell environments.
+
+Making the init.sh script to quickly setup the whole project.
+
+[2022-06-21]
+Try to make something in Haskell to refresh my memory. (Mainly the automatic
+sources getter.)
+
+[2022-06-22]
+Finishing the automatic source getter and publishing everything to github.

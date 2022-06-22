@@ -1,0 +1,37 @@
+name:            build-thesis
+version:         0.1.0.0
+author:          Roel Hemerik
+maintainer:      haskell@roelweb.com
+copyright:       Roel Hemerik
+
+
+description:     A simple Haskell application to build my masters thesis.
+
+dependencies:
+  - base >= 4.7 && < 5
+  - containers
+  - directory
+  - filepath
+  - lens
+  - generic-lens
+  - aeson
+  - yaml
+  - data-default
+  - bytestring
+  - text
+  - wreq
+  - megaparsec
+  - modern-uri
+  - exceptions
+  - mtl
+  - transformers
+  - prettyprinter
+  - HaTeX
+
+executables:
+  build-thesis:
+    main: app/Main.hs
+    dependencies: [base, build-thesis, directory]
+
+library:
+  source-dirs: src
