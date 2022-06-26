@@ -1,3 +1,4 @@
 {
-  "root": "./proposals/optics/main.tex"
+  "root":"./tex/letters/optics-thesis-goals/main.tex",
+  "toolchain":"%TEX %ARG -output-directory=./out %DOC"
 }
