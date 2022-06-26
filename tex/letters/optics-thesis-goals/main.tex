@@ -1,0 +1,121 @@
+\documentclass{article}
+
+\usepackage{amsmath}
+\usepackage{framed}
+
+% Preamble inputs.
+\input{../../include/metadata}
+
+% Document specific inputs.
+\title{Optics Thesis - Goals and Structure}
+
+% Document
+\begin{document}
+
+\maketitle
+
+\begin{framed}
+  In this document, I will explain my current ideas for the masters thesis on optics. It is used in the progress sessions with my supervisors. 
+\end{framed}
+
+\section{Thesis Goals}
+
+The main goal of this thesis is to come up with definitions and an explanation of optics that is easy to follow for both mathematicians and computer scientists. Here, I focus on the mathematical properties of optics and give some tools to reason about them. I especially want to focus on the composability of optics. This to see which properties hold when different kinds of optics are composed with each other.
+
+The second goal is to connect the existing literature on optics. There are a lot of different approaches to optics. On first sight, it is not that clear how the definitions used in these different papers are connected to each other. Part of this thesis should function as a basis to connect those papers.
+
+\bigskip
+
+I can roughly split the literature that I've seen so far in two groups:
+\begin{enumerate}
+  \item Literature that is mainly focussed on understanding the \textbf{Mathematics} and \textbf{Category Theory} of optics. There have a quite technical character and usually assume a lot of prior knowlage on category. (In most cases, even more than the ``Category Theory''-course in MasterMath.)
+  \item Literature that is mainly focussed on \textbf{Practical applications} (in particular \textbf{Functional Programming}). These give for the most part a description on the usage of optics and some quick proofs on their correctness. Large parts of the mathematical background are omitted in these papers, which makes them less useful for readers that want to develop their intuition on optics.
+\end{enumerate}
+This thesis will add to the existing literature by an ``in-between''-approach (leaning a bit more to group 1 than 2). It will give the mathematical background that is omitted in the papers of group 2, but keeping it simple enough that someone without prior knowlage can still follow it (see section \ref{sec:target-audience}). I might still use some of the complex concepts from Category Theory, but structure the thesis in such a way that these could be skipped if the reader finds them to hard to understand.
+
+I will try to explicitly state corollories that are useful in practice (see section \ref{sec:practical-corollaries}). In this way, it will lean more to the literature of group 2. I might add some coding examples, but also keep these skippable to ensure that mathematicians without functional programming experience can understand it.
+
+\subsection{Corollaries useful in practice} \label{sec:practical-corollaries}
+
+Firstly, I will have some extra attention to common mathematical structures (like \emph{lists}, \emph{different kinds of trees}, \emph{type constructors}, etc.). I will use the same structure in multiple parts the thesis so that the reader can use them as a framework\footnote{I wanted a translation for the Dutch word ``kapstok'', but I don't know if ``framework'' is the best translation here.} to build an intuition about optics.
+
+\medskip
+
+Another things that is not explained that well in the literature has to do with refactoring already existing optics. I would like see if I can formulate some laws that are helpful when underlying data-structures change.
+
+\medskip
+
+I think that it is useful to include these corollaries in the thesis. Not only will it be useful in practice, but it would also function as examples for the reader to gain a better intuition on different kinds of optics. (So it could have a simular function as exercises in lecture notes, but with the answer already given.)
+
+\subsection{Target audience} \label{sec:target-audience}
+The thesis itself should function as an easy-to-understand introduction to optics and the tools to reason about them. Aside from the thesis itself, I want to create something like a poster/cheat-sheet that summerises the results of the thesis. I do not know if I will actually make this cheat-sheet, but it does help me to formulate some senarios with the target audience.
+
+\bigskip
+
+Take for instance a new collegue of mine who just finished her Mathemathics/Computer Science degree and wants to have a better understanding of optics. She is than able to use the results of this thesis in the following way:
+\begin{enumerate}
+    \item She reads the the thesis once to become familiar with the theory behind optics. Not only will she learn about the definition of optics itself and how to use them, but also knows why the definitions are chosen that way and how she can reason about them. She will gain a good enough understanding of the theory so that she is able to understand all the different kinds of representations used in different libraries.
+    \item While working in practice, she learns how we use optics in the company\footnote{Naturally, this specific part will not be included in the thesis.}. Because she read the thesis, she knows about the underlying rules, which helps her with maintaining the existing libraries.
+    \item She will have the cheat-sheet printed out next to her desk. This should help her to remember the most important rules on optics. For most of her day-to-day problem solving, this should be enough. If not, she can use the cheat-sheet to quickly find the parts of the thesis that could potentially help her.
+    \item When she encounters a more difficult problem, she can use the thesis as a starting point. This should help her to search for the needed information in other sources. The thesis should also provide here with the basic knowlage needed to understand the difficult mathematical papers that assume a lot of prior knowlage on category theory. (With this I mean that she does not have to understand the paper as a whole, but just enough so that she can understand the parts that are useful the problem she wants to tackle.)
+\end{enumerate}
+This way, the thesis functions a bit like a programmers documentation on optics, but with more focus on the underlying mathematics and category theory. While writing the thesis with this case in mind, I force myself to be thorough but not excessively technical (because of step 1-2). It also forces me to structure the thesis in a modular way, which makes it easier only read parts of it afterwards (step 3-4).
+
+\bigskip
+
+I also consider another scenario with some Mathematician as the target audience. He has no prior knowlage about optics, but encounters some problem in his research and thinks that optics might be helpful. For him, this thesis could function as a roadmap into the world of optics. I would imagine the following scenario:
+\begin{enumerate}
+  \item He would use the cheat-sheet to get a quick overview on what optics are and where they might be useful. With this, he can quickly see if optics really are potentially useful for his problem, or that he needs to find something else.
+  \item He reads the thesis to get an intuition on optics. In the thesis, he will encounter some practical examples that can help him to apply optics for his problem.
+  \item The thesis will introduce him to the other ways in which the literature approach optics. This helps him in choosing the right approach for his problem and helps him to understand the other sources.
+  \item Using this thesis, it will be easier for him to understand the connection between two papers about optics.
+\end{enumerate}
+this way, the thesis functions as an introduction to optics for mathematicians. While writing the thesis with this case in mind, I force myself to use correct mathematical formulation and to keep the connection with the existing literature.
+
+\section{Thesis Structure}
+
+This structure is just a draft version of the thesis.
+
+\begin{enumerate}
+  \item \textbf{Intuitive introduction to different kinds of optics.}
+  \item \textbf{What do we need/want?} A summary of desired properties for optics, with a connection to practical applications.
+  \item \textbf{Basic Category Theory.}
+  \item \textbf{Basic Lambda-calculus/Functional programming.} (Mainly an introduction to notation and the connection with Category Theory.)
+  \item $\vdots$
+  \item \textbf{Representation of Optics.}
+  \item $\vdots$
+\end{enumerate}
+
+\pagebreak
+
+\section{Optics in the wild}
+
+Here, I will summerize some areas where I encountered optics and used them in practice.
+
+\subsection{Live-Coding Music}
+
+Live-coding is a way of making live electronic music using a programming language. Instead of a DJ, you have a performer on the stage who writes (and adapts) an algorithm that generates music. As a result, you get a very complex (and cool!) kind of improvised music.
+
+As a hobby, I sometimes do live-coding performances with a group of multiple musicians using \emph{TidalCycles}\footnote{\emph{TidalCycles} is a live-coding framework based on \emph{Haskell}: https://tidalcycles.org}. The problem with \emph{TidalCycles} however, is that it is not very fit to be used by multiple people. This is because small changes in the code could result in enormous musical changes. This is especially a problem when you adapt the algorithm that someone else just wrote.
+
+Because you are live on stage, you do not have the time to read documentation or reverse-engeneer part of the algorithm of someone else. We have therefore extended \emph{TidalCycles} with some optics-like structures (mainly from $\mathbf{Lens}$, $\mathbf{Setter}$ and $\mathbf{Traversal}$) that allow us to quickly make small changes and re-using results without understanding the current algorithm as a whole.
+
+\subsection{At my work}
+
+I work as a software developer at a company in Rotterdam called \emph{Shared}. It is a bit like a consultancy-bureau that specialises in the smaller administrative processses within bigger companies. The consultants identify the less-than-optimal processes and try to improve on them with solutions that are as little intrusive as possible. One kind of solution that we often use is a combination of no-code RPA-platforms (Like \emph{Microsoft Powerplatform} and \emph{UiPath}) and/or a collection small computer programs, written in various languages native to the customers software ecosystem.
+
+However, it is often the case that these scripts need to be written fast and deal with data that is quite sensitive. Therefore, one of my jobs at Shared is to make the building blocks that enable the consultants to write those scripts in quickly, while still being maintainable and ensuring that they won't misbehave at unexpected edge-cases. This is where I use optics most often in practice.
+
+\medskip
+
+In this application, we mainly make use of the following properties of optics:
+\begin{enumerate}
+  \item \emph{It is easy to give an intuïtive name to an optic.} The main advantage of this is that they can be used by collegues that have no computer science or mathematical background. You don't have to fully understand optics to use them.
+  \item \emph{Optics are composable and the behaviour of these compositions is very predictable.} We therefore only have to define a small set of ``primitive''-optics. All other optics can be made by composing those ``primitive''-optics, while their behaviour can still be analyzed using relatively simple validation algorithms.
+  \item \emph{Optics are easy to refactor.} This especially helps if some API at the costumer suddenly changes. In these cases, we only have to change one or two ``primitive''-optics. Because of their predictable behaviour, we can also see immideately which scripts are likely to have problems with those changes.
+  \item \emph{Optics can be implementented in a consistent way in almost any programming language.} This way, we only have to define the useful optics in \emph{Idris}, which then compiles to all the other languages in which we need them. We are also able to quickly refactor a script to another programming language if needed.
+\end{enumerate}
+
+The solution using optics proves to be very effective in practice, as we encounter way less bugs then when we used other methods to accomplish these goals. However, I do have to admit that I do not fully understand why this is the case, which is the reason why I'm interested in studying optics more closely.
+
+\end{document}
