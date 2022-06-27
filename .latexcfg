@@ -1,4 +1,4 @@
 {
-  "root":"./tex/letters/optics-thesis-goals/main.tex",
+  "root":"./tex/letters/notation-overview/main.tex",
   "toolchain":"%TEX %ARG -output-directory=./out %DOC"
 }

@@ -1,0 +1,55 @@
+\documentclass{article}
+
+\input{../../include/metadata}
+\input{../../include/notation}
+
+\title{Optics Thesis - Notation Overview}
+
+\begin{document}
+
+\section{Common Mathematical Notation}
+
+\begin{tabular}{ll}
+  \textbf{Sets} & $\set{a,b,c,\ldots}$ \\
+  \textbf{Sequences} & $\seq{a,b,c,\ldots}$
+\end{tabular}
+
+\section{Category Theory}
+
+\subsection{Fonts}
+
+\begin{tabular}{ll}
+  \textbf{Arbitrary Categories} & $\cat{C}, \cat{D}, \cat{E}, \ldots$ \\
+  \textbf{Standard Categories} & $\Set, \Cat, \Optic, \Lens, \Prism, \ldots$ \\
+  \textbf{Objects} & $\obj{C}, \obj{D}, \ldots$ \\
+  \textbf{Arbitrary Morphisms} & $\morph{f}, \morph{g}, \morph{h}, \ldots$ \\
+  \textbf{Standard Morphisms} & $\Put, \Get, \Over \ldots$ \\
+  \textbf{Identity Morphism} & $\id$ \\
+\end{tabular}
+
+\subsection{Symbols}
+
+\begin{tabular}{ll}
+  \textbf{Composition} & $f \comp g$ \\
+  \textbf{Isomorphic} & $C \isomorph D$
+\end{tabular}
+
+\section{Optics}
+
+\subsection{Fonts}
+
+\begin{tabular}{ll}
+  \textbf{Helper Functions} & $\fn{outside}, \fn{once}, \fn{twice} \ldots$ \\
+\end{tabular}
+
+\subsection{Symbols}
+
+\begin{tabular}{ll}
+  \textbf{Optic Type} & $\optpair{l}{r}: S \optto A$ \\
+  \textbf{Lens Type} & $\optpair{l}{r}: S \lensto A$ \\
+  \textbf{Lens Composition} & $1 \optcomp 2$ \\
+  \textbf{Optic lift} & $\opti : \cat{C} \times \op{\cat{C}} \to \Optic_\cat{C}$
+\end{tabular}
+
+
+\end{document}
