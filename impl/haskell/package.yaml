@@ -1,0 +1,32 @@
+name:            optics-thesis
+version:         0.1.0.0
+author:          Roel Hemerik
+maintainer:      haskell@roelweb.com
+copyright:       Roel Hemerik
+
+
+description:     Contains a concrete implementation and examples of optics.
+
+dependencies:
+  - base >= 4.7 && < 5
+  - containers
+  - directory
+  - filepath
+  - lens
+  - generic-lens
+  - aeson
+  - yaml
+  - data-default
+  - bytestring
+  - text
+  - wreq
+  - megaparsec
+  - modern-uri
+  - exceptions
+  - mtl
+  - transformers
+  - prettyprinter
+  - HaTeX
+
+library:
+  source-dirs: src

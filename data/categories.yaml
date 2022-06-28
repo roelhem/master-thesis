@@ -1,0 +1,269 @@
+constructors:
+  get: Get: s -> a
+  put: Put: s * b -> t
+  review: Review: b -> t
+  matching: Matching: s -> t + a
+  over: Over: (a -> b) -> (s -> t)
+  munzip: Munzip: s -> m (o (b -> m t) a)
+
+optics:
+
+  base:
+    optic:
+      title: Optic
+      symbol: Optic
+      refs:
+        - ckey: Riley2018
+          page: 4
+          definition: 2.0.1
+
+    mixed-optic:
+      title: Mixed Optic
+      symbol: MixedOptic
+      refs:
+        - ckey: Clarke2020
+          page: 10
+          definition: 2.1
+
+    lawful:
+      title: Lawful Optic
+      symbol: Lawful
+      refs:
+        - ckey: Riley2018
+          page: 22
+
+  prisms:
+    prism:
+      title: Prism
+      symbol: Prism
+      monos:
+        - id: affine-traversal
+      constructors:
+        - review
+        - matching
+      refs:
+        - ckey: Riley2018
+          page: 29
+          definition: 4.2.1
+        - ckey: Clarke2020
+          page: 15
+          definition: 3.16
+
+    monoidal-prism:
+      title: Monoidal Prism
+      Symbol: MonPrism
+      refs:
+        - ckey: Clarke2020
+          page: 16
+          definition: 3.18
+
+    algebraic-prism:
+      title: Coalgebraic Prism
+      Symbol: AlgPrism
+      refs:
+        - ckey: Clarke2020
+          page: 16
+          definition: 3.19
+
+  lenses:
+    lens:
+      title: Lens
+      symbol: Lens
+      monos:
+        - id: affine-traversal
+        - id: linear-lens
+      constructors:
+        - get
+        - put
+      refs:
+        - ckey: Riley2018
+          page: 28
+        - ckey: Clarke2020
+          page: 11
+          definition: 3.1
+
+    linear-lens:
+      title: Linear Lens
+      symbol: LinLens
+      refs:
+        - ckey: Riley2018
+          page: 36
+        - ckey: Clarke2020
+          page: 15
+          definition: 3.14
+
+    achromatic-lens:
+      title: Achromatic Lenses
+      symbol: ALens
+      monos:
+        - id: lens
+      refs:
+        - ckey: Riley2018
+          page: 40
+        - ckey: Clarke2020
+          page: 14
+          definition: 3.12
+
+    writer-lens:
+      title: Writer Lens
+      symbol: WriterLens
+      tags:
+        - effectful
+      refs:
+        - ckey: Riley2018
+          page: 38
+
+    stateful-lens:
+      title: Stateful Lens
+      symbol: StateLens
+      tags:
+        - effectful
+      refs:
+        - ckey: Riley2018
+          page: 39
+
+    monoidal-lens:
+      title: Monoidal Lens
+      symbol: MonLens
+      refs:
+        - ckey: Clarke2020
+          page: 12
+          definition: 3.3
+
+    monadic-lens:
+      title: Monadic Lens
+      symbol: MndLens
+      refs:
+        - ckey: Clarke2020
+          page: 12
+          definition: 3.5
+
+    algebraic-lens:
+      title: Algebraic Lens
+      symbol: AlgLens
+      refs:
+        - ckey: Clarke2020
+          page: 13
+          definition: 3.8
+
+  traversals:
+    traversal:
+      title: Traversal
+      symbol: Traversal
+      refs:
+        - ckey: Riley2018
+          page: 34
+          definition: 4.6.2
+        - ckey: Clarke2020
+          page: 17
+          definition: 3.20
+
+    affine-traversal:
+      title: Affine Traversal
+      symbol: Affine
+      monos:
+        - id: traversal
+        - id: affine-fold
+      refs:
+        - ckey: Riley2018
+          page: 40
+        - ckey: Clarke2020
+          page: 19
+          definition: 3.24
+
+    traversal1:
+      title: Traversal1
+      symbol: Traversal1
+      monos:
+        - id: traversal
+
+  extreme:
+    eq:
+      title: Equality
+      symbol: Eq
+      monos:
+        - id: iso
+
+    iso:
+      title: Iso
+      symbol: Iso
+      alias: Adapter
+      refs:
+        - ckey: Riley2018
+          page: 30
+        - ckey: Clarke2020
+          page: 24
+          definition: 3.38
+      monos:
+        - id: achromatic-lens
+        - id: prism
+
+    setter:
+      title: Setter
+      symbol: Setter
+      constructors:
+        - over
+      refs:
+        - ckey: Riley2018
+          page: 32
+          definition: 4.5.1
+        - ckey: Clarke2020
+          page: 23
+          definition: 3.35
+
+  plain:
+    getter:
+      title: Getter
+      symbol: Getter
+      refs:
+        - ckey: Clarke2020
+          page: 22
+
+    review:
+      title: Review
+      symbol: Review
+      refs:
+        - ckey: Clarke2020
+          page: 22
+
+    fold:
+      title: Fold
+      symbol: Fold
+      refs:
+        - ckey: Clarke2020
+          page: 23
+
+    affine-fold:
+      title: Affine Fold
+      symbol: AffineFold
+
+    fold1:
+      title: Fold1
+      symbol: Fold1
+
+  misc:
+    grate:
+      title: Grate
+      symbol: Grate
+      refs:
+        - ckey: Riley2018
+          page: 40
+        - ckey: Clarke2020
+          page: 21
+          definition: 3.29
+
+    glass:
+      title: Glass
+      symbol: Glass
+      refs:
+        - ckey: Clarke2020
+          page: 22
+          definition: 3.31
+
+    kaleidoscope:
+      title: Kaleidoscope
+      symbol: Kaleidoscope
+      refs:
+        - ckey: Clarke2020
+          page: 20
+          definition: 3.26

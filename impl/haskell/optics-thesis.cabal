@@ -1,0 +1,42 @@
+cabal-version: 1.12
+
+-- This file has been generated from package.yaml by hpack version 0.34.4.
+--
+-- see: https://github.com/sol/hpack
+
+name:           optics-thesis
+version:        0.1.0.0
+description:    Contains a concrete implementation and examples of optics.
+author:         Roel Hemerik
+maintainer:     haskell@roelweb.com
+copyright:      Roel Hemerik
+build-type:     Simple
+
+library
+  exposed-modules:
+      OptTh.Types.Simple
+  other-modules:
+      Paths_optics_thesis
+  hs-source-dirs:
+      src
+  build-depends:
+      HaTeX
+    , aeson
+    , base >=4.7 && <5
+    , bytestring
+    , containers
+    , data-default
+    , directory
+    , exceptions
+    , filepath
+    , generic-lens
+    , lens
+    , megaparsec
+    , modern-uri
+    , mtl
+    , prettyprinter
+    , text
+    , transformers
+    , wreq
+    , yaml
+  default-language: Haskell2010
