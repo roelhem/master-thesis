@@ -18,6 +18,8 @@ library
       Tools.Bib.Doi
       Tools.Bib.IO
       Tools.Build.Bibliography
+      Tools.Data.Categories
+      Tools.Data.Refs
   other-modules:
       Paths_build_thesis
   hs-source-dirs:
