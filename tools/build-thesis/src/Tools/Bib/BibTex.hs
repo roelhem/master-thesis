@@ -25,7 +25,12 @@ import Data.Generics.Sum
 import Data.Generics.Product
 import Data.Generics.Labels
 import qualified Text.Megaparsec as P
-import Text.Megaparsec hiding (parseMaybe, parseMaybe, parse, parseTest, runParser, runParser')
+import Text.Megaparsec hiding (parseMaybe
+                              , parseMaybe
+                              , parse
+                              , parseTest
+                              , runParser
+                              , runParser')
 import Text.Megaparsec.Char
 import qualified Text.Megaparsec.Char.Lexer as L
 import qualified Network.Wreq as R
@@ -171,16 +176,6 @@ keyToLower = over (from _key) ST.toLower
 
 keysToLower :: KeyMap v -> KeyMap v
 keysToLower = A.mapKeyVal keyToLower id
-
--- noCase :: KeyMap v -> KeyMap v
--- noCase = A.mapKeyVal (A.toLower) (v1 -> v2) (KeyMap v1)
-
--- parseObjectCiteKey :: A.Object -> A.Parser (Value, A.Object)
--- parseObjectCiteKey o = foldr f (fail "Empty Object.") citekeyAliases
---   where f s = flip (<|>) $ fmap (, o) (piLookup s o)
---
--- parsePropSetter :: Value -> BibTexEntry -> A.Parser BibTexEntry
--- parsePropSetter v b = (\x -> set _props x b) <$> parseJSON v
 
 class ToJSONPair a where
   toJSONPair :: a -> (Key, Value)

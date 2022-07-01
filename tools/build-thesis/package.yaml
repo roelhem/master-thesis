@@ -26,6 +26,8 @@ dependencies:
   - mtl
   - transformers
   - prettyprinter
+  - template-haskell
+  - Cabal
   - HaTeX
 
 executables:

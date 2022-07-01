@@ -1,0 +1,4 @@
+{
+    "haskell.manageHLS": "GHCup",
+    "editor.bracketPairColorization.enabled": false
+}

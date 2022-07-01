@@ -14,29 +14,47 @@ build-type:     Simple
 
 library
   exposed-modules:
+      OptTh.Examples.LensLib.Trees
+      OptTh.Examples.OpticsLib.Trees
+      OptTh.Examples.Trees.OpticsLib
+      OptTh.Examples.Trees.Types
+      OptTh.Simple.Helpers
+      OptTh.Types.Extra
+      OptTh.Types.Kinds
+      OptTh.Types.Profunctor
       OptTh.Types.Simple
+      OptTh.Types.TH
+      OptTh.Types.VanLaarhoven
   other-modules:
       Paths_optics_thesis
   hs-source-dirs:
       src
   build-depends:
-      HaTeX
-    , aeson
+      aeson
     , base >=4.7 && <5
     , bytestring
+    , comonad
     , containers
     , data-default
     , directory
+    , distributive
     , exceptions
     , filepath
     , generic-lens
+    , lattices
     , lens
     , megaparsec
     , modern-uri
     , mtl
+    , optics
+    , optics-core
     , prettyprinter
+    , profunctors
+    , semigroupoids
+    , template-haskell
     , text
     , transformers
+    , vector-sized
     , wreq
     , yaml
   default-language: Haskell2010

@@ -14,19 +14,27 @@ dependencies:
   - filepath
   - lens
   - generic-lens
+  - optics
+  - optics-core
   - aeson
+  - profunctors
+  - comonad
+  - lattices
   - yaml
   - data-default
   - bytestring
   - text
   - wreq
+  - vector-sized
+  - semigroupoids
+  - distributive
   - megaparsec
   - modern-uri
   - exceptions
   - mtl
   - transformers
   - prettyprinter
-  - HaTeX
+  - template-haskell
 
 library:
   source-dirs: src

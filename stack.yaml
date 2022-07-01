@@ -5,3 +5,5 @@ resolver: github:commercialhaskell/stackage-snapshots:lts/19/4.yaml
 packages:
   - tools/build-thesis
   - impl/haskell
+
+extra-deps:
