@@ -5,6 +5,7 @@
 \input{../include/page-style}
 \input{../include/diagrams}
 \input{../include/metadata}
+\input{../include/lhs}
 \input{../include/notation}
 
 \title{Optics Thesis - Cheat Sheat}
@@ -16,5 +17,19 @@
 \chapter{The (Lawless) Optics Latice}
 
 \subfile{lattice/lawless}
+
+\chapter{Implementation Examples}
+
+\begin{code}
+f x = x + 4
+\end{code}
+
+\input{../../impl/haskell/src/OptTh/Simple/Standard.lhs}
+
+\chapter{Examples with Trees}
+
+\input{../../impl/haskell/src/OptTh/Examples/Trees/Types.lhs}
+
+\input{../../impl/haskell/src/OptTh/Examples/Trees/OpticsLib.lhs}
 
 \end{document}

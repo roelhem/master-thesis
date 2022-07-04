@@ -1,0 +1,39 @@
+\documentclass{standalone}
+
+\begin{document}
+
+\begin{table}
+
+  \begin{tabular}{l|ll|l}
+    \multicolumn{1}{c}{\textbf{Optic}} & 
+    \multicolumn{1}{c}{\textbf{Left Action}} & 
+    \multicolumn{1}{c}{\textbf{Right Action}} & 
+    \multicolumn{1}{c}{\textbf{\Intro/\Elim~Rules}} \\
+    \hline
+
+    \Iso& $A$ & $B$ & $\Get \otimes \optRule{Review}$ \\
+
+    \Lens& $M\times A$ & $M \bullet B$ & $\Get \otimes \Put$ \\
+    $\AlgLens_\Psi$ & $\Forgetful M \times A$ & $\Forgetful M \bullet B$ & $\Get \otimes \Put_{\Psi}$ \\
+
+
+    \Prism& $M\bullet A$ & $M + B$ & $\Matching \otimes \optRule{Review}$ \\
+    $\CoAlgPrism_\Theta$& $\Forgetful M \bullet A$ & $\Forgetful M + B$ & $\Matching_\Theta \otimes \optRule{Review}$ \\
+    
+    \Grate& $\Hom(M, A)$ & $M \bullet B$ & $\optRule{Grate}$ \\
+
+    \Glass& $M_1 \times \Hom(M_2, A)$ & $M_1 \times \Hom(M_2, A)$ & $\optRule{Glass}$ \\
+    \Affine& $M_1 + (M_2 \times A)$ &  $M_1 + (M_2 \times A)$ & $\Access$ \\
+
+    \Traversal& $\Pw(M,A)$ &  $\Pw(M,A)$ & $\Extract$ \\
+
+    \Kaleidoscope& $\App(M,A)$ & $\App(M,B)$ & $\Aggregate$ \\
+    \Setter& $F A$ & $F M$ & $\Over$ \\
+    
+  \end{tabular}
+
+  \caption{Optics table with actions and Introduction ($\Intro$) and Elimination ($\Elim$) rules.}%
+  \label{table:optics-actions}
+\end{table}
+
+\end{document}

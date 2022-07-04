@@ -1,0 +1,27 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{thhaskell}[2022/07/02 Directives to format the Haskell code in my MSc Thesis]
+
+\RequirePackage{xcolor}
+\RequirePackage{ifthen}
+
+\newboolean{lhsTypeEnv}
+\setboolean{lhsTypeEnv}{false}
+
+\newcommand{\iftypeelse}[2]{\ifthenelse{\boolean{lhsTypeEnv}}{#1}{#2}}
+
+\newcommand{\TypeVarid}[1]{\Varid{#1}}
+\newcommand{\TypeConid}[1]{\Conid{#1}}
+
+\renewcommand{\Conid}[1]{\textsf{#1}}
+
+\newcommand{\lhsvarid}[1]{\iftypeelse{\TypeVarid{#1}}{\Varid{#1}}}
+\newcommand{\lhsconid}[1]{\iftypeelse{\TypeConid{#1}}{\Conid{#1}}}
+\newcommand{\lhsconsym}[1]{\mathbin{#1}}
+\newcommand{\lhsvarsym}[1]{\mathbin{#1}}
+
+\newcommand{\lhstypestart}{%
+  \setboolean{lhsTypeEnv}{true}%
+}
+\newcommand{\lhscolend}[1]{%
+  \ifthenelse{\equal{E}{#1}}{\setboolean{lhsTypeEnv}{false}}{}%
+}

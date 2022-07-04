@@ -1,0 +1,85 @@
+\documentclass{standalone}
+
+\begin{document}
+
+\begin{figure}
+
+  \begin{center}
+    \begin{tikzpicture}[
+        xscale=2.4,
+        yscale=1.5,
+        natto/.style={->},
+        dirty/.style={color=black!30}
+      ]
+  
+      \node[] (Kaleidoscope) at (2,3) {$\Kaleidoscope$};
+  
+      \node[dirty] (Fold) at (-1,6) {$\Fold$};
+      \node[] (Setter) at (-0,6) {$\Setter$};
+  
+      \node[dirty] (Fold1) at (-2,5) {$\FoldOne$};
+      \node[dirty] (AffineFold) at (-1,5) {$\AffineFold$};
+      \node[] (Traversal) at (0,5) {$\Traversal$};
+  
+      \node[dirty] (Getter) at (-2,4) {$\Getter$};
+      \node[] (Traversal1) at (-1,4) {$\TraversalOne$};
+      \node[] (Affine) at (0,4) {$\Affine$};
+      \node[dirty] (Review) at (2,4) {$\CReview$};
+  
+      \node[] (Glass) at (1,4) {$\Glass$};
+  
+      \node[] (Lens) at (-1,3) {$\Lens$};
+      \node[] (Prism) at (0,3) {$\Prism$};
+      \node[] (Grate) at (1,3) {$\Grate$};
+  
+      \node[] (AlgLens) at (-1,2) {$\AlgLens_\Phi$};
+
+      \node[] (CoAlgPrism) at (0,2) {$\CoAlgPrism_\Theta$};
+
+      \node[] (Iso) at (0,1) {$\Iso$};
+      \node[] (Eq) at (0,0) {$\Eq$};
+  
+      \draw[natto] (Eq) -- (Iso);
+      \draw[natto] (Iso) -- (AlgLens);
+      \draw[natto] (AlgLens) -- (Lens);
+      \draw[natto] (Iso) -- (Grate);
+      \draw[natto] (Iso) -- (Kaleidoscope);
+      \draw[natto] (Iso) -- (CoAlgPrism);
+      \draw[natto] (CoAlgPrism) -- (Prism);
+      \draw[natto, dirty] (Lens) -- (Getter);
+      \draw[natto] (Lens) -- (Traversal1);
+      \draw[natto] (Lens) -- (Affine);
+      \draw[natto] (Lens) -- (Glass);
+      \draw[natto, dirty] (Grate) -- (Review);
+      \draw[natto, dirty] (Prism) -- (Review);
+      \draw[natto] (Prism) -- (Affine);
+  
+      \draw[natto] (Grate) -- (Glass);
+  
+      \draw[natto, dirty] (Getter) -- (Fold1);
+      \draw[natto, dirty] (Getter) -- (AffineFold);
+      \draw[natto, dirty] (Traversal1) -- (Fold1);
+      \draw[natto] (Traversal1) -- (Traversal);
+      \draw[natto] (Affine) -- (Traversal);
+      \draw[natto, dirty] (Affine) -- (AffineFold);
+      \draw[natto, dirty] (Fold1) -- (Fold);
+      \draw[natto, dirty] (AffineFold) -- (Fold);
+      \draw[natto, dirty] (Traversal) -- (Fold);
+      \draw[natto] (Traversal) -- (Setter);
+      \draw[natto] (Glass) -- (Setter);
+  
+  
+      \draw[natto] (Kaleidoscope) -- (Setter);
+      \draw[natto, dirty] (Kaleidoscope) -- (Review);
+      %\draw[natto] (Fold) -- (Optic);
+      %\draw[natto] (Review) -- (Optic);
+  
+    \end{tikzpicture}
+  \end{center}
+
+  \caption{The start of the category of optic types. An arrow can be read as a natural transformation between optic types. The goal is give a better explanation of this diagram and to see if I can make it a proper lattice.}
+  \label{fig:optic-type-category}
+\end{figure}
+
+
+\end{document}

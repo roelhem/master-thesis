@@ -1,0 +1,82 @@
+%format _1 = "\opt{\pi}_1"
+%format _2 = "\opt{\pi}_2"
+%format _evAt k = "\optic{ev}_{" k "}"
+%format _evAt' k = "\optic{ev}'_{" k "}"
+%format _swap = "\optic{swap}_\times"
+%format _swapEither = "\optic{swap}_+"
+%format _coDom = "\optic{coDom}"
+%format _img = "\optic{img}"
+%format _seq = "\optic{seq}"
+%format _tau1 = "\opt{\tau}_1"
+%format _tau2 = "\opt{\tau}_2"
+%format _fmap = "\optic{fmap}"
+%format _first = "\optic{first}"
+%format _second = "\optic{second}"
+%format _pair = "\optic{pair}"
+%format _single = "\optic{single}"
+%format _distr = "\optic{distr}"
+
+%format _traverse = "\optic{traverse}"
+%format _traverse1 = "\optic{traverse1}"
+
+%format _foldMap = "\optic{foldMap}"
+%format _foldMap1 = "\optic{foldMap1}"
+
+%format _pairGrate = "\optic{pairGrate}"
+
+%format -> = "\iftypeelse{\to}{\mapsto}"
+
+
+%format _Right = "\opt{\sigma}_1"
+%format _Left = "\opt{\sigma}_2"
+
+%format <$> = "\fmap"
+%format $ = "\fapp"
+%format >.> = "\mathbin{\optcomp}"
+%format <.*> = "\mathbin{\boxast}"
+%format <*.> = "\mathbin{\boxast}"
+%format <.> = "\mathbin{\boxast}"
+%format <*> = "\mathbin{\boxast}"
+
+%format og = "\,"
+
+%format fmap = "\fn{fmap}"
+%format first = "\fn{first}"
+%format either = "\fn{either}"
+%format sequence1 = "\fn{sequence1}"
+%format minBound = "\fn{minBound}"
+%format maxBound = "\fn{maxBound}"
+%format fromEnum = "\fn{fromEnum}"
+%format `asTypeOf` = ::
+%format second = "\fn{second}"
+%format fst = "\pi_1"
+%format snd = "\pi_2"
+%format flip = "\fn{flip}"
+%format sequenceA = "\fn{sequenceA}"
+%format traverse = "\fn{traverse}"
+%format swap = "\fn{swap}"
+%format traverse1 = "\fn{traverse1}"
+%format foldMap = "\fn{foldMap}"
+%format foldMap1 = "\fn{foldMap1}"
+%format foldr = "\fn{foldr}"
+%format foldl = "\fn{foldl}"
+%format uncurry = "\fn{uncurry}"
+%format curry = "\fn{curry}"
+%format bool = "\fn{bool}"
+%format const = "\fn{const}"
+%format mempty = "\mempty"
+
+%format Either a b = a "+" b
+%format Bool = "\Bool"
+
+%format forall = "\forall"
+%format :: = "\mathrel{\lhsTypeDefCollon}\lhstypestart"
+%format type = "\textbf{type} \lhstypestart"
+%format Int = "\mathbb{Z}"
+
+%subst fromto b e t     = "\>[" b "]{}" t "{}\lhscolend{" e "}\<[" e "]%'n"
+
+%subst conid a = "\lhsconid{" a "}"
+%subst varid a = "\lhsvarid{" a "}"
+%subst consym a = "\lhsconsym{" a "}"
+%subst varsym a = "\lhsvarsym{" a "}"

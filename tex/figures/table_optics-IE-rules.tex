@@ -1,0 +1,27 @@
+\documentclass{standalone}
+
+\begin{document}
+
+\begin{table}
+
+  \begin{tabular}{l|ll}
+    \multicolumn{1}{c}{\textbf{Rule}} & 
+    \multicolumn{2}{c}{\textbf{Type}} \\
+    \hline
+    \Get~& $S \to A$ \\
+    \Review~& $B \to T$ \\
+    $\Put_{\Psi, \bullet}$ & $\Psi S \bullet B \to T$ & with $\Psi$ a monad. \\
+    $\Matching_{\Theta, \bullet}$ & $S \to (\Theta T \bullet \Psi)$ & with $\Theta$ a comonad. \\
+    $\optRule{Grate}_\bullet$ & $((S \to A) \bullet B) \to T$ \\
+    \optRule{Glass}~& $S \times ((S \to A) \to B) \to T$ \\
+    \Access~& $S \to T + A \times (B \to T)$ \\
+    \Extract~& $S \to \coprod_{n \in \mathbb{N}} A^n \times (B^n \to T)$ \\
+    \Aggregate~& $\prod_{n \in \mathbb{N}} (A^n \to B) \to (S^n \to T)$ \\
+    \Over~& $\Hom(A,B) \to \Hom(S,T)$ \\
+  \end{tabular}
+
+  \caption{Types of the Introduction ($\Intro$) and Elimination ($\Elim$) rules for optics of the form $(A,B) \optto (S,T)$.}%
+  \label{table:optic-IE-rules}
+\end{table}
+
+\end{document}

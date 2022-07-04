@@ -12,10 +12,11 @@ fi
 echo -e "\e[1;36m LOADING THE CONFIGURATION. \e[0m"
 
 # Initialising default values.
-ENV_CONFIG_FILE="./.env"
+WORKSPACE_DIR=$(pwd)
+ENV_CONFIG_FILE="$WORKSPACE_DIR/.env"
 ENV_CONFIG_LOCAL_FILE="$ENV_CONFIG_FILE.local"
 PY_COMMAND="python"
-PY_VENV_DIR="./.venv"
+PY_VENV_DIR="$WORKSPACE_DIR/.venv"
 PY_REQUIREMENTS_FILE="./requirements.txt"
 
 # Loading the environment variables.
@@ -35,6 +36,23 @@ PY_VENV_BIN_DIR="$PY_VENV_DIR/bin"
 PY_VENV_COMMAND="$PY_VENV_BIN_DIR/python"
 PY_VENV_PIP_COMMAND="$PY_VENV_BIN_DIR/pip"
 PY_VENV_ACTIVATE_SCRIPT="$PY_VENV_BIN_DIR/activate"
+
+
+echo " > Deriving directories."
+OUT_DIR="$WORKSPACE_DIR/out"
+IMPL_DIR="$WORKSPACE_DIR/impl"
+TEX_DIR="$WORKSPACE_DIR/tex"
+
+HASKELL_IMPL_DIR="$IMPL_DIR/haskell"
+HASKELL_IMPL_SRC_DIR="$HASKELL_IMPL_DIR/src"
+
+TEX_FORMATS_DIR="$TEX_DIR/formats"
+TEX_LIBRARY_DIR="$TEX_DIR/library"
+
+LHS2TEX_PATH=":$TEX_FORMATS_DIR//:$HASKELL_IMPL_SRC_DIR"
+TEX_PATH="$TEX_DIR/:$TEX_LIBRARY_DIR//:"
+
+export TEXINPUTS=$TEX_PATH
 
 
 # ---------------------------------------------------------------------------- #
@@ -82,6 +100,30 @@ repl () {
 }
 
 echo -e "\e[1;36m CONFIGURING THE HASKELL ENVIRONMENT. \e[0m"
+
+# ---------------------------------------------------------------------------- #
+#   TYPESETTING                                                                #
+# ---------------------------------------------------------------------------- #
+
+lhs-parse () {
+  echo -e "\e[1;36m PARSING *.lhs FILES WITH lhs2TeX. \e[0m"
+  lhs2TeX --let="debug=True" \
+          -o "$OUT_DIR/out.tex" \
+          --path="$LHS2TEX_PATH" \
+          tools/build.lhs 
+  echo -e "\e[1;36m FINISHED PARSING: \e[0m lhs2TeX ended with exit code $?"
+}
+
+buildth() {
+  lhs-parse && latexmk -jobname="out" \
+                       -output-directory=$OUT_DIR \
+                       -pdf \
+                       -interaction=nonstopmode \
+                       -file-line-error \
+                       -f \
+                       $OUT_DIR/out.tex
+  echo -e "\e[1;32m BUILD TERMINATED WITH: " $? "\e[0m\n\n"
+}
 
 # ---------------------------------------------------------------------------- #
 #   FINALIZING THE INITIALISATION SCRIPT                                       #

@@ -17,8 +17,12 @@ library
       OptTh.Examples.LensLib.Trees
       OptTh.Examples.OpticsLib.Trees
       OptTh.Examples.Trees.OpticsLib
+      OptTh.Examples.Trees.SimpleLib
       OptTh.Examples.Trees.Types
+      OptTh.Kinds.Data
       OptTh.Simple.Helpers
+      OptTh.Simple.Standard
+      OptTh.Simple.Types
       OptTh.Types.Extra
       OptTh.Types.Kinds
       OptTh.Types.Profunctor

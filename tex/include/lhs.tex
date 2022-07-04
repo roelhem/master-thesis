@@ -1,0 +1,34 @@
+\usepackage[outputdir=../../out/tex/cheat-sheat]{minted}
+
+\usepackage[abspath]{currfile}
+\usepackage{xcolor}
+
+\definecolor{oneDarkBG}{HTML}{282C43}
+
+\setminted{
+  style=colorful,
+  framerule=0.1pt,
+  rulecolor=gray
+}
+
+
+\newminted[code]{haskell}{
+  mathescape,
+  linenos,
+  numberblanklines=false,
+  firstnumber=last,
+  frame=lines,
+  style=xcode,
+  stripnl
+}
+\newmintedfile[haskfile]{haskell}{
+  mathescape,
+  linenos,
+  numberblanklines=false,
+  frame=lines,
+  stripnl
+}
+
+
+\newmintinline[hask]{haskell}{}
+\newmint{haskell}{}

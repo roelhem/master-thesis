@@ -1,0 +1,65 @@
+\documentclass{standalone}
+
+\begin{document}
+
+\begin{longtable}[c]{lcll}
+  \hline
+  \multicolumn{1}{c}{\textbf{Description}} & 
+  \multicolumn{1}{c}{\textbf{Symbol}} &
+  \multicolumn{2}{c}{\textbf{\LaTeX-macro}} \\
+  \hline
+  Logical Implication & $\lif$ & \verb|\lif| \\
+  Logical Equivalence & $\liff$ & \verb|\liff| \\
+  Introduction Rule & $\Intro$ & \verb|\Intro| \\
+  Elimination Rule & $\Elim$ & \verb|\Elim| \\
+  \hline
+  Objects & $\obj{C},\obj{D},\obj{E},\ldots$ & \verb|\obj| & \emph{optional for now} \\
+  Morphisms & $\morph{f}, \morph{g}, \morph{h}, \ldots$ & \verb|\morph| & \emph{optional for now} \\
+  Standard Morphisms & $\stdmorph{f}, \stdmorph{g}, \stdmorph{h}, \ldots$ & \verb|\stdmorph| \\
+  Morphism Signature & $f:C \to D$ & \verb|\to| \\
+  Monomorphism Signature & $f: C \monoto D$ & \verb|\monoto| \\
+  Composition & $f \circ g$ & \verb|\circ| \\
+  Reversed Composition & $g \fatsemi f$ & \verb|\fatsemi| \\
+  Categories & $\cat{C},\cat{D},\cat{E},\ldots$ & \verb|\cat| \\
+  Opposite Category & $\op{\cat{C}}$ & \verb|\op| \\
+  Standard Categories & $\stdcat{Cat}, \stdcat{Set}, \ldots$ & \verb|\stdcat| \\
+  Functors & $F,G,D,\ldots$ & \\
+  Natural Transformations & $\nat{\eta}, \nat{\mu}, \nat{\xi}, \ldots$ & \verb|\nat| &
+  \emph{optional for now} \\
+  Identity Morphism & $\id_C$ & \verb|\id| \\
+  Evaluation & $\ev$ & \verb|\ev| \\
+  Natural Transformation & $\eta : F \natto G$ & \verb|\natto| \\
+  Wildcard & $\wild$ & \verb|\wild| \\
+  Homset-Functor & $\Hom(\wild,\wild)$ & \verb|\Hom| \\
+  Forgetful Functor & $\Forgetful$ & \verb|\Forgetful| \\
+  \hline
+  Products & $C \times D$ & \verb|\times| \\
+  Coproducts & $C + D$ & \verb|+| \\
+  Tensor Product & $C \otimes D$ & \verb|\otimes| \\
+  Exponentials & $\cexp{C}{D}$ & \verb|\cexp| & \emph{Two (reversed) arguments!} \\
+  Arbitrary binary operator & $C \bullet D$ & \verb|\bullet| \\
+  \hline
+  Objects of profunctors & $\pobj{\cat{C}}$ & \verb|\pobj| & \emph{One argument!} \\
+  Objects of $\pobj{\cat{C}}$ & $\oobj{A}{B}$ & \verb|\oobj| & \emph{Takes two arguments!} \\
+  \hline
+  Reused Optic & $\opt{\pi}_1, \opt{\pi}_2, \ldots$ & \verb|\opt| \\
+  Reused Optic Name & $\optic{name}$ & \verb|\optic| \\
+  Optic Signature & $\oobj{S}{T} \optto \oobj{A}{B}$ &  \verb|\optto| \\
+  Optic Composition & $p \optcirc q$ &  \verb|\optcirc| \\
+  Optic $\Intro$/$\Elim$-rules & $\optRule{Put}, \optRule{Get}, \ldots$ & \verb|\optRule| \\
+  Reversed Optic Comp. & $q \optcomp p$ & \verb|\optcomp| \\
+  \hline
+  Function Application & $f \fapp x$ or $f x$ & \verb|\fapp| \\
+  Mapped Function Appl. & $f \fmap F x$ & \verb|\fmap| \\
+  Category of types & $\Hask$ & \verb|\Hask| \\
+  Standard functions & $\fn{snd}, \fn{fmap}, \fn{get}, \ldots$ & \verb|\fn| \\
+  Type or Type Constructor & $\hask{Int}, \hask{Maybe}, \ldots$ & \verb|\hask| \\
+  Unit of monoid & $\mempty$ & \verb|\mempty| \\
+  \hline
+  Isomorphism & $x \isomorph y$ & \verb|\isomorph| \\
+  Comparison & $x \equiv y$ & \verb|\equiv| \\
+
+  \caption{Proposal for the notation used in this MSc Thesis (and the \LaTeX-macros to create them).}%
+\end{longtable}
+
+\end{document}
