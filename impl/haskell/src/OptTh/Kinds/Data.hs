@@ -1,14 +1,8 @@
-{-# LANGUAGE GADTs #-}
-{-# LANGUAGE StandaloneDeriving #-}
-{-# LANGUAGE FlexibleContexts #-}
-{-# LANGUAGE UndecidableInstances #-}
-{-# LANGUAGE TypeFamilies #-}
-{-# LANGUAGE DeriveGeneric #-}
 module OptTh.Kinds.Data where
 
 import Data.Functor.Identity (Identity)
 import Data.Data (Proxy)
-import Algebra.PartialOrd (PartialOrd)
+import Algebra.PartialOrd (PartialOrd (..))
 import Data.Bifunctor
 import GHC.Generics (Generic)
 
@@ -18,10 +12,16 @@ data OpticKind m where
   Equality        :: OpticKind'
   Iso             :: OpticKind'
   Lens            :: OpticKind'
-  AlgLens         :: Monad m => Proxy m -> OpticKind m
   Prism           :: OpticKind'
-  AlgPrism        :: Monad m => Proxy m -> OpticKind m
+  Grate           :: OpticKind'
+  Glass           :: OpticKind'
+  Kaleidoscope    :: OpticKind'
   AffineTraversal :: OpticKind'
+  Traversal1      :: OpticKind'
+  Traversal       :: OpticKind'
+  AffineFold      :: OpticKind'
+  Fold1           :: OpticKind'
+  Fold            :: OpticKind'
   Setter          :: OpticKind'
   Unknown         :: OpticKind'
 

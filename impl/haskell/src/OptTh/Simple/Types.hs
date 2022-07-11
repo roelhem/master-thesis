@@ -1,17 +1,3 @@
-{-# LANGUAGE GADTs          #-}
-{-# LANGUAGE DataKinds      #-}
-{-# LANGUAGE RankNTypes #-}
-{-# LANGUAGE TypeOperators #-}
-{-# LANGUAGE MultiParamTypeClasses #-}
-{-# LANGUAGE FlexibleInstances #-}
-{-# LANGUAGE UndecidableInstances #-}
-{-# LANGUAGE AllowAmbiguousTypes #-}
-{-# LANGUAGE TypeApplications #-}
-{-# LANGUAGE TupleSections #-}
-{-# LANGUAGE FlexibleContexts #-}
-{-# LANGUAGE ConstraintKinds #-}
-{-# LANGUAGE TypeFamilies #-}
-
 module OptTh.Simple.Types where
 
 import qualified OptTh.Types.Kinds as K
@@ -29,26 +15,27 @@ import Control.Monad ((>=>))
 ------------------------ SIMPLE OPTICS TYPE ALIASES ------------------------
 ----------------------------------------------------------------------------
 
-type Equality        = Optic K.Equality        Identity
-type Iso             = Optic K.Iso             Identity
-type Setter          = Optic K.Setter          Identity
-type Lens            = Optic K.Lens            Identity
-type AlgLens         = Optic K.AlgLens
-type AchromaticLens  = Optic K.AlgLens         Maybe
-type Prism           = Optic K.Prism           Identity
-type AlgPrism        = Optic K.AlgPrism
-type Grate           = Optic K.Grate           Identity
-type Glass           = Optic K.Glass           Identity
-type Traversal       = Optic K.Traversal       Identity
-type Traversal1      = Optic K.Traversal1      Identity
-type AffineTraversal = Optic K.AffineTraversal Identity
-type Kaleidoscope    = Optic K.Kaleidoscope    Identity
-type Getter          = Optic K.Getter          Identity
-type Fold            = Optic K.Fold            Identity
-type Fold1           = Optic K.Fold1           Identity
-type AffineFold      = Optic K.AffineFold      Identity
-type Review          = Optic K.Review          Identity
-type Unknown         = Optic K.Unknown         Identity
+type Equality        = Optic K.Equality
+type Iso             = Optic K.Iso 
+type Setter          = Optic K.Setter
+type Lens            = Optic K.Lens
+type AlgLens m       = Optic (K.AlgLens m)
+type AchromaticLens  = Optic (K.AlgLens Maybe)
+type ClassifyingLens = Optic (K.AlgLens [])
+type Prism           = Optic K.Prism 
+type AlgPrism m      = Optic (K.AlgPrism m)
+type Grate           = Optic K.Grate
+type Glass           = Optic K.Glass
+type Traversal       = Optic K.Traversal
+type Traversal1      = Optic K.Traversal1
+type AffineTraversal = Optic K.AffineTraversal
+type Kaleidoscope    = Optic K.Kaleidoscope
+type Getter          = Optic K.Getter
+type Fold            = Optic K.Fold
+type Fold1           = Optic K.Fold1
+type AffineFold      = Optic K.AffineFold
+type Review          = Optic K.Review
+type Unknown         = Optic K.Unknown
 
 type Equality'          s a = Equality s s a a
 type Iso'               s a = Iso s s a a
@@ -75,7 +62,7 @@ type Unknown'           s a = Unknown s s a a
 ---------------------- SIMPLE OPTIC GADT DEFINITIONS -----------------------
 ----------------------------------------------------------------------------
 
-data Optic (k :: K.OpticKind) m s t a b where
+data Optic (k :: K.OpticKind) s t a b where
   Equality        :: (s ~ a, t ~ b) => Equality s t a b
   Iso             :: (s -> a)
                   -> (b -> t)
@@ -158,9 +145,6 @@ instance Comonad c => Iso ~> AlgPrism c where
 instance Iso ~> Grate where
   og (Iso get from) = Grate $ \f -> from (f get)
 
-instance Iso ~> Kaleidoscope where
-  og (Iso get from) = Kaleidoscope (\f ss -> from $ (f.fmap get) ss)
-
 -- Transitive inclusions
 instance Iso ~> Lens  where og = og @(AlgLens  Identity) . og
 instance Iso ~> Prism where og = og @(AlgPrism Identity) . og
@@ -176,6 +160,7 @@ instance Iso ~> AffineFold      where og = og @Lens . og
 instance Iso ~> Fold1           where og = og @Lens . og
 instance Iso ~> Fold            where og = og @Lens . og
 instance Iso ~> Review          where og = og @Prism . og
+instance Iso ~> Kaleidoscope    where og = og @Grate . og
 
 -- AlgLens -----------------------------------------------------------------
 
@@ -258,6 +243,9 @@ instance Grate ~> Glass where
 
 instance Grate ~> Review where
   og (Grate unzip) = Review (unzip . const)
+
+instance Grate ~> Kaleidoscope where
+  og (Grate unzip) = Kaleidoscope (\f s -> unzip $ \g -> f (g <$> s))
 
 -- Transitive inclusions
 instance Grate ~> Setter where og = og @Glass . og
@@ -381,7 +369,7 @@ type family (:\/:) (l :: * -> * -> * -> * -> *) (r :: * -> * -> * -> * -> *) :: 
   Grate           :\/: AffineFold      = Unknown
   Grate           :\/: Fold1           = Unknown
   Grate           :\/: Fold            = Unknown
-  Grate           :\/: Kaleidoscope    = Setter
+  Grate           :\/: Kaleidoscope    = Kaleidoscope
   Grate           :\/: Setter          = Setter
   Grate           :\/: Getter          = Unknown
   Grate           :\/: Review          = Review
@@ -450,7 +438,7 @@ type family (:\/:) (l :: * -> * -> * -> * -> *) (r :: * -> * -> * -> * -> *) :: 
 ----------------------------- COMPOSITIONS ---------------------------------
 ----------------------------------------------------------------------------
 
-(>!>) :: Optic k m s t x y -> Optic k m x y a b -> Optic k m s t a b
+(>!>) :: Optic k s t x y -> Optic k x y a b -> Optic k s t a b
 Equality                 >!> Equality                   = Equality
 Iso  get review          >!> Iso get' review'           = Iso (get'.get) (review . review')
 Lens get put             >!> Lens get' put'             = Lens (get'.get)      $ \s b -> put s (put' (get s)     b)
@@ -485,14 +473,11 @@ Getter get               >!> Getter get'                = Getter       $ get' . 
 Review review            >!> Review review'             = Review       $ review . review'
 Unknown                  >!> Unknown                    = Unknown
 
-(>?>) :: (l ~ Optic lo lm, r ~ Optic ro rm, l ~> o, r ~> o, o ~ Optic oo om) => l s t x y -> r x y a b -> o s t a b
+(>?>) :: (l ~ Optic lo, r ~ Optic ro, l ~> o, r ~> o, o ~ Optic oo) => l s t x y -> r x y a b -> o s t a b
 l >?> r = og l >!> og r
 
-(>.>) :: (l ~ Optic lo lm, r ~ Optic ro rm, l ~> o, r ~> o, o ~ (l :\/: r), o ~ Optic oo om) => l s t x y -> r x y a b -> o s t a b
+(>.>) :: (l ~ Optic lo, r ~ Optic ro, l ~> o, r ~> o, o ~ (l :\/: r), o ~ Optic oo) => l s t x y -> r x y a b -> o s t a b
 (>.>) = (>?>)
-
-
-
 
 ----------------------------------------------------------------------------
 ------------------------------- INSTANCES ----------------------------------

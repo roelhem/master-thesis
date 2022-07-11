@@ -1,9 +1,5 @@
 %if False
 \begin{code}
-{-# LANGUAGE LambdaCase #-}
-{-# LANGUAGE RankNTypes #-}
-{-# LANGUAGE TupleSections #-}
-
 module OptTh.Examples.Trees.OpticsLib where
 
 import OptTh.Examples.Trees.Types
@@ -34,7 +30,7 @@ For the edges, we can only define a grate.
 
 \begin{code}
 vertices :: Grate (Edges k c) (Edges k c') c c'
-vertices = Grate (\f k -> f ($k))
+vertices = Grate (\f k -> f ($ k))
 \end{code}
 
 However, if the edge indices are comparable, we can have a lens that for each vertex.

@@ -1,12 +1,3 @@
-{-# LANGUAGE DefaultSignatures #-}
-{-# LANGUAGE TypeOperators #-}
-{-# LANGUAGE MultiParamTypeClasses #-}
-{-# LANGUAGE ConstraintKinds #-}
-{-# LANGUAGE UndecidableSuperClasses #-}
-{-# LANGUAGE FlexibleInstances #-}
-{-# LANGUAGE UndecidableInstances #-}
-{-# LANGUAGE MonoLocalBinds #-}
-{-# LANGUAGE RankNTypes #-}
 module OptTh.Types.Extra where
 
 import Control.Applicative
@@ -34,18 +25,6 @@ mkDT x = DT (`fmap` x)
 
 instance Functor (DT t) where
     fmap f (DT g) = DT (\h -> g (h . f))
-
--- Units
--- | Functors for which there exists a monomorphic natural transformation ID => Functor
-class Functor f => Unit f where
-    upure :: a -> f a
-    default upure :: Applicative f => a -> f a
-    upure = pure
-
-instance (Functor a, Applicative a) => Unit a
-
-class    (Contravariant f, Unit f) => ContraUnit f
-instance (Contravariant f, Unit f) => ContraUnit f
 
 ----------------------------------------------------------------------------
 ----------------------------- APPLY ----------------------------------------

@@ -1,7 +1,4 @@
 \begin{code}
-{-# LANGUAGE LambdaCase #-}
-{-# LANGUAGE RankNTypes #-}
-
 module OptTh.Examples.LensLib.Trees where
 
 import Control.Lens (lens, prism, iso, _1, _2, view, bimapping, setting, over, set, review)
@@ -9,7 +6,7 @@ import Data.Bifunctor (first, second)
 import Control.Applicative (liftA2)
 import Data.Functor.Apply (liftF3, MaybeApply(..), (<.>), (<.*>), (<*.>) )
 import Data.Traversable (fmapDefault, foldMapDefault)
-import OptTh.Types.Extra (upure, DT(..), dtExtract)
+import OptTh.Types.Extra (DT(..), dtExtract)
 import Data.Distributive (Distributive (collect), distribute)
 import OptTh.Types.VanLaarhoven ( Traversal
                                 , Traversal1

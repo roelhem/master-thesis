@@ -2,9 +2,6 @@
 
 %if False
 \begin{code}
-{-# LANGUAGE LambdaCase #-}
-{-# LANGUAGE TypeApplications #-}
-
 module OptTh.Simple.Standard where
 
 import OptTh.Simple.Types
@@ -115,7 +112,7 @@ _distr :: Iso (Either k k' -> a) (Either k k' -> b) (k -> a, k' -> a) (k -> b, k
 Every exponential type $A^K$ has an optic $\optic{coDom} \in \Grate\left(\oobj{A^K}{B^K},\oobj{A}{B}\right)$ that focusses on the codomain $A$. It can be defined as follows:
 
 \begin{code}
-_coDom = Grate (\f s -> f ($s))
+_coDom = Grate (\f s -> f ($ s))
 \end{code}
 
 In a programmers perpective, a \emph{grate} represent things that are ``like functions''. In a simular way, we have that \emph{glasses} are a bit like ``methods'' (as used in object oriented programming language). Now methods aren't a thing in Haskell, so we do not bother with those in this module.

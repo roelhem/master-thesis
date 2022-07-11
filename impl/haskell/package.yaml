@@ -14,6 +14,7 @@ dependencies:
   - filepath
   - lens
   - generic-lens
+  - pointed
   - optics
   - optics-core
   - aeson
@@ -35,6 +36,44 @@ dependencies:
   - transformers
   - prettyprinter
   - template-haskell
+
+default-extensions:
+  - AllowAmbiguousTypes
+  - ConstraintKinds
+  - DataKinds
+  - DeriveFunctor
+  - DeriveGeneric
+  - DefaultSignatures
+  - DuplicateRecordFields
+  - ExistentialQuantification
+  - FlexibleContexts
+  - FlexibleInstances
+  - FunctionalDependencies
+  - GADTs
+  - ImplicitParams
+  - IncoherentInstances
+  - KindSignatures
+  - LambdaCase
+  - LiberalTypeSynonyms
+  - MonoLocalBinds
+  - MultiParamTypeClasses
+  - NoMonomorphismRestriction
+  - OverloadedStrings
+  - OverloadedLabels
+  - PolyKinds
+  - QuantifiedConstraints
+  - RankNTypes
+  - ScopedTypeVariables
+  - StandaloneDeriving
+  - TupleSections
+  - TemplateHaskell
+  - TemplateHaskellQuotes
+  - TypeApplications
+  - TypeFamilies
+  - TypeOperators
+  - TypeSynonymInstances
+  - UndecidableInstances
+  - UndecidableSuperClasses
 
 library:
   source-dirs: src

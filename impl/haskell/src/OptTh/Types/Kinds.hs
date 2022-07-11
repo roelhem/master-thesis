@@ -1,9 +1,3 @@
-{-# LANGUAGE TemplateHaskell #-}
-{-# LANGUAGE DataKinds #-}
-{-# LANGUAGE KindSignatures #-}
-{-# LANGUAGE TypeSynonymInstances #-}
-{-# LANGUAGE MultiParamTypeClasses #-}
-
 module OptTh.Types.Kinds where
 
 import qualified Optics as O
@@ -18,6 +12,9 @@ kindAliasesFromOpticsLib
 customKindDeclarations
 
 type OpticKind = O.OpticKind
+
+data AlgLens  (m :: * -> *) :: OpticKind
+data AlgPrism (m :: * -> *) :: OpticKind
 
 ----------------------------------------------------------------------------
 ----------------------------- JOIN KINDS -----------------------------------

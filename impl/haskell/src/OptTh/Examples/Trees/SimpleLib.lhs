@@ -1,9 +1,5 @@
 %if False
 \begin{code}
-{-# LANGUAGE GADTs #-}
-{-# LANGUAGE LambdaCase #-}
-{-# LANGUAGE RankNTypes #-}
-{-# LANGUAGE TupleSections #-}
 
 module OptTh.Examples.Trees.SimpleLib where
 

@@ -1,12 +1,3 @@
-{-# LANGUAGE AllowAmbiguousTypes       #-}
-{-# LANGUAGE DataKinds                 #-}
-{-# LANGUAGE DuplicateRecordFields     #-}
-{-# LANGUAGE FlexibleContexts          #-}
-{-# LANGUAGE NoMonomorphismRestriction #-}
-{-# LANGUAGE TemplateHaskellQuotes     #-}
-{-# LANGUAGE GADTs #-}
-{-# LANGUAGE KindSignatures #-}
-
 module OptTh.Types.TH where
 
 import Language.Haskell.TH
@@ -26,10 +17,10 @@ kindDefs = [ KindDef "Equality"        True  False
            , KindDef "Iso"             True  True
            , KindDef "Lens"            True  True
            , KindDef "ReversedLens"    True  True
-           , KindDef "AlgLens"         False False
+          -- , KindDef "AlgLens"         False False
            , KindDef "Prism"           True  True
            , KindDef "ReversedPrism"   True  True
-           , KindDef "AlgPrism"        False False
+          -- , KindDef "AlgPrism"        False False
            , KindDef "Traversal"       True  True
            , KindDef "Traversal1"      True  False
            , KindDef "AffineTraversal" True  True

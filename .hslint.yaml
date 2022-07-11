@@ -1,0 +1,41 @@
+- group: {name: future, enabled: true}
+- group: {name: use-lens, enabled: true}
+- group: {name: use-th-quotes, enabled: true}
+- group: {name: generalise, enabled: true}
+- group: {name: dollar, enabled: true}
+- arguments:
+  - -XAllowAmbiguousTypes
+  - -XConstraintKinds
+  - -XDataKinds
+  - -XDeriveFunctor
+  - -XDeriveGeneric
+  - -XDefaultSignatures
+  - -XDuplicateRecordFields
+  - -XExistentialQuantification
+  - -XFlexibleContexts
+  - -XFlexibleInstances
+  - -XFunctionalDependencies
+  - -XGADTs
+  - -XImplicitParams
+  - -XIncoherentInstances
+  - -XKindSignatures
+  - -XLambdaCase
+  - -XLiberalTypeSynonyms
+  - -XMonoLocalBinds
+  - -XMultiParamTypeClasses
+  - -XNoMonomorphismRestriction
+  - -XOverloadedStrings
+  - -XPolyKinds
+  - -XQuantifiedConstraints
+  - -XRankNTypes
+  - -XScopedTypeVariables
+  - -XStandaloneDeriving
+  - -XTupleSections
+  - -XTemplateHaskell
+  - -XTemplateHaskellQuotes
+  - -XTypeApplications
+  - -XTypeFamilies
+  - -XTypeOperators
+  - -XTypeSynonymInstances
+  - -XUndecidableInstances
+  - -XUndecidableSuperClasses

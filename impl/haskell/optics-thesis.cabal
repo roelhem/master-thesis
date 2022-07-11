@@ -20,19 +20,60 @@ library
       OptTh.Examples.Trees.SimpleLib
       OptTh.Examples.Trees.Types
       OptTh.Kinds.Data
+      OptTh.Profunctor.Types
       OptTh.Simple.Helpers
       OptTh.Simple.Standard
       OptTh.Simple.Types
       OptTh.Types.Extra
       OptTh.Types.Kinds
       OptTh.Types.Profunctor
-      OptTh.Types.Simple
       OptTh.Types.TH
       OptTh.Types.VanLaarhoven
+      Vitrea.Categories
+      Vitrea.Combinators
+      Vitrea.Optics
+      Vitrea.Tambara
   other-modules:
       Paths_optics_thesis
   hs-source-dirs:
       src
+  default-extensions:
+      AllowAmbiguousTypes
+      ConstraintKinds
+      DataKinds
+      DeriveFunctor
+      DeriveGeneric
+      DefaultSignatures
+      DuplicateRecordFields
+      ExistentialQuantification
+      FlexibleContexts
+      FlexibleInstances
+      FunctionalDependencies
+      GADTs
+      ImplicitParams
+      IncoherentInstances
+      KindSignatures
+      LambdaCase
+      LiberalTypeSynonyms
+      MonoLocalBinds
+      MultiParamTypeClasses
+      NoMonomorphismRestriction
+      OverloadedStrings
+      OverloadedLabels
+      PolyKinds
+      QuantifiedConstraints
+      RankNTypes
+      ScopedTypeVariables
+      StandaloneDeriving
+      TupleSections
+      TemplateHaskell
+      TemplateHaskellQuotes
+      TypeApplications
+      TypeFamilies
+      TypeOperators
+      TypeSynonymInstances
+      UndecidableInstances
+      UndecidableSuperClasses
   build-depends:
       aeson
     , base >=4.7 && <5
@@ -52,6 +93,7 @@ library
     , mtl
     , optics
     , optics-core
+    , pointed
     , prettyprinter
     , profunctors
     , semigroupoids

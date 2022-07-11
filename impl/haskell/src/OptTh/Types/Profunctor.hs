@@ -1,4 +1,3 @@
-{-# LANGUAGE TypeFamilies #-}
 module OptTh.Types.Profunctor where
 
 import qualified Optics as O
