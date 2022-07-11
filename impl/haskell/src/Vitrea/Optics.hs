@@ -18,60 +18,50 @@ update", 2019).
 
 module Vitrea.Optics where
 
-import Prelude hiding (map)
-import Data.Function
-import Data.Either
-import Control.Monad.Writer hiding (Any)
-import Data.Functor.Identity
-import Data.Functor.Compose
-import Data.Void
-import Control.Monad
-import Data.Char
-import Data.List
-import Data.Monoid hiding (Any)
-import Text.Printf
+import OptTh.Prelude
 
 import Vitrea.Categories
-import Vitrea.Tambara
+    ( Kleisli(Kleisli), FunList(..), Algebra, App(..), (:=>) (..), Any )
+import Vitrea.Tambara ( ProfOptic, Optic(Optic), ex2prof )
 
 -- | Lenses are optics for the action of the category on itself via the
 -- cartesian product.
-type Lens a s = ProfOptic Any (->) Any (->) Any (->) (,) () (,) (,) a a s s
-mkLens :: (s -> a) -> (s -> a -> s) -> Lens a s
-mkLens v u =
+type Lens' a s = ProfOptic Any (->) Any (->) Any (->) (,) () (,) (,) a a s s
+lens' :: (s -> a) -> (s -> a -> s) -> Lens' a s
+lens' v u =
   ex2prof @Any @(->) @Any @(->) @Any @(->) @(,) @()
   $ Optic (\a -> (a , v a)) (uncurry u)
 
 -- | Type-variant version.
-type Lens' a b s t = ProfOptic Any (->) Any (->) Any (->) (,) () (,) (,) a b s t
-mkLens' :: (s -> a) -> (s -> b -> t) -> Lens' a b s t
-mkLens' v u =
+type Lens a b s t = ProfOptic Any (->) Any (->) Any (->) (,) () (,) (,) a b s t
+lens :: (s -> a) -> (s -> b -> t) -> Lens a b s t
+lens v u =
   ex2prof @Any @(->) @Any @(->) @Any @(->) @(,) @()
   $ Optic (\a -> (a , v a)) (uncurry u)
 
 
 -- | Prisms are optics for the action of the category on itself via the
 -- coproduct.
-type Prism a s = ProfOptic Any (->) Any (->) Any (->) Either Void Either Either a a s s
-mkPrism :: (s -> Either s a) -> (a -> s) -> Prism a s
-mkPrism m b =
+type Prism' a s = ProfOptic Any (->) Any (->) Any (->) Either Void Either Either a a s s
+prism :: (s -> Either s a) -> (a -> s) -> Prism' a s
+prism m b =
   ex2prof @Any @(->) @Any @(->) @Any @(->) @Either @Void
   $ Optic m (either id b)
 
 -- | Algebraic lenses are optics for the action of the category of algebras of a
 -- monad.
-type AlgebraicLens m a s = (Monad m) => ProfOptic Any (->) Any (->) (Algebra m) (->) (,) () (,) (,) a a s s
-mkAlgebraicLens :: forall m a s . (Monad m) => (s -> a) -> (m s -> a -> s) -> AlgebraicLens m a s
-mkAlgebraicLens v u =
+type AlgebraicLens' m a s = (Monad m) => ProfOptic Any (->) Any (->) (Algebra m) (->) (,) () (,) (,) a a s s
+algebraicLens' :: forall m a s . (Monad m) => (s -> a) -> (m s -> a -> s) -> AlgebraicLens' m a s
+algebraicLens' v u =
   ex2prof @Any @(->) @Any @(->) @(Algebra m) @(->) @(,) @()
   $ Optic (\a -> (return a , v a)) (uncurry u)
 
 -- | Kaleidoscopes are optics for the action by evaluation of applicative
 -- functors.
-type Kaleidoscope a s = ProfOptic Any (->) Any (->) Applicative Nat Compose Identity App App a a s s
-mkKaleidoscope :: (([a] -> a) -> ([s] -> s)) -> Kaleidoscope a s
-mkKaleidoscope f =
-  ex2prof @Any @(->) @Any @(->) @Applicative @Nat @Compose @Identity @App @App
+type Kaleidoscope' a s = ProfOptic Any (->) Any (->) Applicative (:=>) Compose Identity App App a a s s
+kaleidoscope :: (([a] -> a) -> ([s] -> s)) -> Kaleidoscope' a s
+kaleidoscope f =
+  ex2prof @Any @(->) @Any @(->) @Applicative @(:=>) @Compose @Identity @App @App
   $ Optic (App . flip More (Done id)) (uncurry (flip f) . noFun . getApp)
     where
       noFun :: FunList s a b -> ([s] , [a] -> b)
@@ -81,15 +71,15 @@ mkKaleidoscope f =
 -- | Monadic lenses are mixed optics for the cartesian product in the base
 -- category and in the Kleisli category.
 type MonadicLens m a b s t = (Monad m) => ProfOptic Any (->) Any (Kleisli m) Any (->) (,) () (,) (,) a b s t
-mkMonadicLens :: forall m a b s t . (Monad m) => (s -> a) -> (s -> b -> m t) -> MonadicLens m a b s t
-mkMonadicLens v u =
+monadicLens :: forall m a b s t . (Monad m) => (s -> a) -> (s -> b -> m t) -> MonadicLens m a b s t
+monadicLens v u =
   ex2prof @Any @(->) @Any @(Kleisli m) @Any @(->) @(,) @() @(,) @(,)
   $ Optic (\a -> (a , v a)) (Kleisli (uncurry u))
 
 -- | Traversals as optics for the action of traversable functors.
-type Traversal a s = ProfOptic Any (->) Any (->) Traversable Nat Compose Identity App App a a s s
-mkTraversal :: forall a b s t . (s -> ([a], [a] -> s)) -> Traversal a s
-mkTraversal ext = mkTraversal2 (\s -> Split (fst (ext s)) s) (\(Split la s) -> snd (ext s) la)
+type Traversal' a s = ProfOptic Any (->) Any (->) Traversable (:=>) Compose Identity App App a a s s
+traversal :: forall a b s t . (s -> ([a], [a] -> s)) -> Traversal' a s
+traversal ext = mkTraversal2 (\s -> Split (fst (ext s)) s) (\(Split la s) -> snd (ext s) la)
 
 data Split s a = Split [a] s
 instance Functor (Split s) where
@@ -100,7 +90,7 @@ instance Traversable (Split s) where
   traverse f (Split l s) = fmap (`Split` s) (traverse f l)
 
 
-mkTraversal2 :: forall a s f . Traversable f => (s -> f a) -> (f a -> s) -> Traversal a s
+mkTraversal2 :: forall a s f . Traversable f => (s -> f a) -> (f a -> s) -> Traversal' a s
 mkTraversal2 l r =
-  ex2prof @Any @(->) @Any @(->) @Traversable @Nat @Compose @Identity @App @App
+  ex2prof @Any @(->) @Any @(->) @Traversable @(:=>) @Compose @Identity @App @App
   $ Optic (App . l) (r . getApp)

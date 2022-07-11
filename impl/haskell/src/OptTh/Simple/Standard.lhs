@@ -4,15 +4,12 @@
 \begin{code}
 module OptTh.Simple.Standard where
 
+import OptTh.Prelude
 import OptTh.Simple.Types
 import OptTh.Simple.Helpers
-import Data.Semigroup.Foldable (Foldable1 (..))
-import Data.Semigroup.Traversable (Traversable1 (..))
 import Data.Bifunctor (Bifunctor(..))
 import Data.Ix (Ix)
-import Data.Tuple (swap)
 import qualified Data.List.NonEmpty as NE
-import Data.Foldable (Foldable(..))
 import qualified Data.Map as M
 import Data.Bool (bool)
 \end{code}

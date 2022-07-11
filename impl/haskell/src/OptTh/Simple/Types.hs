@@ -1,15 +1,14 @@
 module OptTh.Simple.Types where
 
-import qualified OptTh.Types.Kinds as K
+import qualified OptTh.Kinds.Optics as K
 import qualified Control.Lens as L
-import Data.Functor.Identity (Identity (..))
-import Data.Functor.Apply (Apply, MaybeApply (MaybeApply))
+import OptTh.Prelude
 import Data.Bifunctor (first)
 import Control.Comonad (Comonad (extract))
 import Control.Applicative (Const(..))
 import Data.Kind (Constraint)
-import Control.Lens.Internal.Setter (Settable(..))
 import Control.Monad ((>=>))
+import OptTh.Common.Categories (Composable (..), Composable' (..), type (~>) (..))
 
 ----------------------------------------------------------------------------
 ------------------------ SIMPLE OPTICS TYPE ALIASES ------------------------
@@ -20,8 +19,8 @@ type Iso             = Optic K.Iso
 type Setter          = Optic K.Setter
 type Lens            = Optic K.Lens
 type AlgLens m       = Optic (K.AlgLens m)
-type AchromaticLens  = Optic (K.AlgLens Maybe)
-type ClassifyingLens = Optic (K.AlgLens [])
+type AchromaticLens  = Optic K.AchromaticLens
+type ClassifyingLens = Optic K.ClassifyingLens
 type Prism           = Optic K.Prism 
 type AlgPrism m      = Optic (K.AlgPrism m)
 type Grate           = Optic K.Grate
@@ -37,26 +36,26 @@ type AffineFold      = Optic K.AffineFold
 type Review          = Optic K.Review
 type Unknown         = Optic K.Unknown
 
-type Equality'          s a = Equality s s a a
-type Iso'               s a = Iso s s a a
-type Setter'            s a = Setter s s a a
-type Lens'              s a = Lens s s a a
-type AlgLens'         m s a = AlgLens m s s a a
-type AchromaticLens'    s a = AchromaticLens s s a a
-type Prism'             s a = Prism s s a a
-type AlgPrism'        m s a = AlgPrism m s s a a
-type Grate'             s a = Grate s s a a
-type Glass'             s a = Glass s s a a
-type Traversal'         s a = Traversal s s a a
-type Traversal1'        s a = Traversal1 s s a a
-type AffineTraversal'   s a = AffineTraversal s s a a
-type Kaleidoscope'      s a = Kaleidoscope s s a a
-type Getter'            s a = Getter s s a a
-type Fold'              s a = Fold s s a a
-type Fold1'             s a = Fold1 s s a a
-type AffineFold'        s a = AffineFold s s a a
-type Review'            s a = Review s s a a
-type Unknown'           s a = Unknown s s a a
+type Equality'          s a = Equality         s s a a
+type Iso'               s a = Iso              s s a a
+type Setter'            s a = Setter           s s a a
+type Lens'              s a = Lens             s s a a
+type AlgLens'         m s a = AlgLens        m s s a a
+type AchromaticLens'    s a = AchromaticLens   s s a a
+type Prism'             s a = Prism            s s a a
+type AlgPrism'        m s a = AlgPrism       m s s a a
+type Grate'             s a = Grate            s s a a
+type Glass'             s a = Glass            s s a a
+type Traversal'         s a = Traversal        s s a a
+type Traversal1'        s a = Traversal1       s s a a
+type AffineTraversal'   s a = AffineTraversal  s s a a
+type Kaleidoscope'      s a = Kaleidoscope     s s a a
+type Getter'            s a = Getter           s s a a
+type Fold'              s a = Fold             s s a a
+type Fold1'             s a = Fold1            s s a a
+type AffineFold'        s a = AffineFold       s s a a
+type Review'            s a = Review           s s a a
+type Unknown'           s a = Unknown          s s a a
 
 ----------------------------------------------------------------------------
 ---------------------- SIMPLE OPTIC GADT DEFINITIONS -----------------------
@@ -108,219 +107,212 @@ data Optic (k :: K.OpticKind) s t a b where
 ------------------------------- SUB OPTICS ---------------------------------
 ----------------------------------------------------------------------------
 
-class (~>) o o' where
-  og :: o s t a b -> o' s t a b
-
-instance a ~> a where og = id
-
 -- Equality ----------------------------------------------------------------
 
 instance Equality ~> Iso where
-  og Equality = Iso id id
+  oTo Equality = Iso id id
 
 -- Transitive inclusions
-instance Monad m   => Equality ~> AlgLens m  where og = og @Iso . og
-instance Comonad c => Equality ~> AlgPrism c where og = og @Iso . og
-instance Equality ~> Lens                    where og = og @Iso . og
-instance Equality ~> Prism                   where og = og @Iso . og
-instance Equality ~> AffineTraversal         where og = og @Iso . og
-instance Equality ~> Traversal1              where og = og @Iso . og
-instance Equality ~> Glass                   where og = og @Iso . og
-instance Equality ~> Traversal               where og = og @Iso . og
-instance Equality ~> Setter                  where og = og @Iso . og
-instance Equality ~> Getter                  where og = og @Iso . og
-instance Equality ~> AffineFold              where og = og @Iso . og
-instance Equality ~> Fold1                   where og = og @Iso . og
-instance Equality ~> Fold                    where og = og @Iso . og
-instance Equality ~> Review                  where og = og @Iso . og
+instance Monad m   => Equality ~> AlgLens m  where oTo = oTo @Iso . oTo
+instance Comonad c => Equality ~> AlgPrism c where oTo = oTo @Iso . oTo
+instance Equality ~> Lens                    where oTo = oTo @Iso . oTo
+instance Equality ~> Prism                   where oTo = oTo @Iso . oTo
+instance Equality ~> AffineTraversal         where oTo = oTo @Iso . oTo
+instance Equality ~> Traversal1              where oTo = oTo @Iso . oTo
+instance Equality ~> Glass                   where oTo = oTo @Iso . oTo
+instance Equality ~> Traversal               where oTo = oTo @Iso . oTo
+instance Equality ~> Setter                  where oTo = oTo @Iso . oTo
+instance Equality ~> Getter                  where oTo = oTo @Iso . oTo
+instance Equality ~> AffineFold              where oTo = oTo @Iso . oTo
+instance Equality ~> Fold1                   where oTo = oTo @Iso . oTo
+instance Equality ~> Fold                    where oTo = oTo @Iso . oTo
+instance Equality ~> Review                  where oTo = oTo @Iso . oTo
 
 -- Iso ---------------------------------------------------------------------
 
 instance Monad m => Iso ~> AlgLens m where
-  og (Iso get from) = AlgLens get (const from)
+  oTo (Iso get from) = AlgLens get (const from)
 
 instance Comonad c => Iso ~> AlgPrism c where
-  og (Iso get from) = AlgPrism (Right . get) from
+  oTo (Iso get from) = AlgPrism (Right . get) from
 
 instance Iso ~> Grate where
-  og (Iso get from) = Grate $ \f -> from (f get)
+  oTo (Iso get from) = Grate $ \f -> from (f get)
 
 -- Transitive inclusions
-instance Iso ~> Lens  where og = og @(AlgLens  Identity) . og
-instance Iso ~> Prism where og = og @(AlgPrism Identity) . og
-
--- Transitive inclusions
-instance Iso ~> AffineTraversal where og = og @Lens . og
-instance Iso ~> Traversal1      where og = og @Lens . og
-instance Iso ~> Glass           where og = og @Lens . og
-instance Iso ~> Traversal       where og = og @Lens . og
-instance Iso ~> Setter          where og = og @Lens . og
-instance Iso ~> Getter          where og = og @Lens . og
-instance Iso ~> AffineFold      where og = og @Lens . og
-instance Iso ~> Fold1           where og = og @Lens . og
-instance Iso ~> Fold            where og = og @Lens . og
-instance Iso ~> Review          where og = og @Prism . og
-instance Iso ~> Kaleidoscope    where og = og @Grate . og
+instance Iso ~> Lens            where oTo = oTo @(AlgLens  Identity) . oTo
+instance Iso ~> Prism           where oTo = oTo @(AlgPrism Identity) . oTo
+instance Iso ~> AffineTraversal where oTo = oTo @Lens . oTo
+instance Iso ~> Traversal1      where oTo = oTo @Lens . oTo
+instance Iso ~> Glass           where oTo = oTo @Lens . oTo
+instance Iso ~> Traversal       where oTo = oTo @Lens . oTo
+instance Iso ~> Setter          where oTo = oTo @Lens . oTo
+instance Iso ~> Getter          where oTo = oTo @Lens . oTo
+instance Iso ~> AffineFold      where oTo = oTo @Lens . oTo
+instance Iso ~> Fold1           where oTo = oTo @Lens . oTo
+instance Iso ~> Fold            where oTo = oTo @Lens . oTo
+instance Iso ~> Review          where oTo = oTo @Prism . oTo
+instance Iso ~> Kaleidoscope    where oTo = oTo @Grate . oTo
 
 -- AlgLens -----------------------------------------------------------------
 
 instance Monad m => AlgLens m ~> Lens where
-  og (AlgLens get put) = Lens get $ \s -> put (return s)
+  oTo (AlgLens get put) = Lens get $ \s -> put (return s)
 
 -- Transitive inclusions
-instance Monad c => AlgLens c ~> AffineTraversal where og = og @Lens . og
-instance Monad c => AlgLens c ~> Traversal1      where og = og @Lens . og
-instance Monad c => AlgLens c ~> Glass           where og = og @Lens . og
-instance Monad c => AlgLens c ~> Traversal       where og = og @Lens . og
-instance Monad c => AlgLens c ~> Setter          where og = og @Lens . og
-instance Monad c => AlgLens c ~> Getter          where og = og @Lens . og
-instance Monad c => AlgLens c ~> Fold1           where og = og @Lens . og
-instance Monad c => AlgLens c ~> AffineFold      where og = og @Lens . og
-instance Monad c => AlgLens c ~> Fold            where og = og @Lens . og
+instance Monad c => AlgLens c ~> AffineTraversal where oTo = oTo @Lens . oTo
+instance Monad c => AlgLens c ~> Traversal1      where oTo = oTo @Lens . oTo
+instance Monad c => AlgLens c ~> Glass           where oTo = oTo @Lens . oTo
+instance Monad c => AlgLens c ~> Traversal       where oTo = oTo @Lens . oTo
+instance Monad c => AlgLens c ~> Setter          where oTo = oTo @Lens . oTo
+instance Monad c => AlgLens c ~> Getter          where oTo = oTo @Lens . oTo
+instance Monad c => AlgLens c ~> Fold1           where oTo = oTo @Lens . oTo
+instance Monad c => AlgLens c ~> AffineFold      where oTo = oTo @Lens . oTo
+instance Monad c => AlgLens c ~> Fold            where oTo = oTo @Lens . oTo
 
 -- AchromaticLens ----------------------------------------------------------
 
 instance AchromaticLens ~> Review where
-  og (AlgLens get put) = Review (put Nothing)
+  oTo (AlgLens get put) = Review (put Nothing)
 
 -- ListLens ----------------------------------------------------------------
 
 instance AlgLens [] ~> Kaleidoscope where
-  og (AlgLens get put) = Kaleidoscope $ \f ss -> put ss ((f . fmap get) ss)
+  oTo (AlgLens get put) = Kaleidoscope $ \f ss -> put ss ((f . fmap get) ss)
 
 -- AlgPrism ----------------------------------------------------------------
 
 instance Comonad c => AlgPrism c ~> Prism where
-  og (AlgPrism preview review) = Prism (first extract <$> preview) review
+  oTo (AlgPrism preview review) = Prism (first extract <$> preview) review
 
 -- Transitive inclusions
-instance Comonad c => AlgPrism c ~> AffineTraversal where og = og @Prism . og
-instance Comonad c => AlgPrism c ~> Traversal       where og = og @Prism . og
-instance Comonad c => AlgPrism c ~> Setter          where og = og @Prism . og
-instance Comonad c => AlgPrism c ~> AffineFold      where og = og @Prism . og
-instance Comonad c => AlgPrism c ~> Fold            where og = og @Prism . og
-instance Comonad c => AlgPrism c ~> Review          where og = og @Prism . og
+instance Comonad c => AlgPrism c ~> AffineTraversal where oTo = oTo @Prism . oTo
+instance Comonad c => AlgPrism c ~> Traversal       where oTo = oTo @Prism . oTo
+instance Comonad c => AlgPrism c ~> Setter          where oTo = oTo @Prism . oTo
+instance Comonad c => AlgPrism c ~> AffineFold      where oTo = oTo @Prism . oTo
+instance Comonad c => AlgPrism c ~> Fold            where oTo = oTo @Prism . oTo
+instance Comonad c => AlgPrism c ~> Review          where oTo = oTo @Prism . oTo
 
 -- Lens --------------------------------------------------------------------
 
 instance Lens ~> AffineTraversal where
-  og (Lens get put) = AffineTraversal (\s -> Right (get s, put s))
+  oTo (Lens get put) = AffineTraversal (\s -> Right (get s, put s))
 
 instance Lens ~> Traversal1 where
-  og (Lens get put) = Traversal1 (\f s -> put s <$> f (get s))
+  oTo (Lens get put) = Traversal1 (\f s -> put s <$> f (get s))
 
 instance Lens ~> Glass where
-  og (Lens get put) = Glass $ \s f -> put s (f get)
+  oTo (Lens get put) = Glass $ \s f -> put s (f get)
 
 instance Lens ~> Getter where
-  og (Lens get _)   = Getter get
+  oTo (Lens get _)   = Getter get
 
 -- Transitive inclusions
-instance Lens ~> Traversal  where og = og @AffineTraversal . og
-instance Lens ~> Setter     where og = og @AffineTraversal . og
-instance Lens ~> Fold1      where og = og @Getter . og
-instance Lens ~> Fold       where og = og @Getter . og
-instance Lens ~> AffineFold where og = og @Getter . og
+instance Lens ~> Traversal  where oTo = oTo @AffineTraversal . oTo
+instance Lens ~> Setter     where oTo = oTo @AffineTraversal . oTo
+instance Lens ~> Fold1      where oTo = oTo @Getter . oTo
+instance Lens ~> Fold       where oTo = oTo @Getter . oTo
+instance Lens ~> AffineFold where oTo = oTo @Getter . oTo
 
 -- Prism -------------------------------------------------------------------
 
 instance Prism ~> AffineTraversal where
-  og (Prism preview review) = AffineTraversal (fmap (,review) <$> preview)
+  oTo (Prism preview review) = AffineTraversal (fmap (,review) <$> preview)
 
 instance Prism ~> Review where
-  og (Prism _ review) = Review review
+  oTo (Prism _ review) = Review review
 
 -- Transitive inclusions
-instance Prism ~> Traversal  where og = og @AffineTraversal . og
-instance Prism ~> Setter     where og = og @AffineTraversal . og
-instance Prism ~> AffineFold where og = og @AffineTraversal . og
-instance Prism ~> Fold       where og = og @AffineTraversal . og
+instance Prism ~> Traversal  where oTo = oTo @AffineTraversal . oTo
+instance Prism ~> Setter     where oTo = oTo @AffineTraversal . oTo
+instance Prism ~> AffineFold where oTo = oTo @AffineTraversal . oTo
+instance Prism ~> Fold       where oTo = oTo @AffineTraversal . oTo
 
 -- Grate -------------------------------------------------------------------
 
 instance Grate ~> Glass where
-  og (Grate unzip) = Glass $ const unzip
+  oTo (Grate unzip) = Glass $ const unzip
 
 instance Grate ~> Review where
-  og (Grate unzip) = Review (unzip . const)
+  oTo (Grate unzip) = Review (unzip . const)
 
 instance Grate ~> Kaleidoscope where
-  og (Grate unzip) = Kaleidoscope (\f s -> unzip $ \g -> f (g <$> s))
+  oTo (Grate unzip) = Kaleidoscope (\f s -> unzip $ \g -> f (g <$> s))
 
 -- Transitive inclusions
-instance Grate ~> Setter where og = og @Glass . og
+instance Grate ~> Setter where oTo = oTo @Glass . oTo
 
 -- Traversal1 --------------------------------------------------------------
 
 instance Traversal1 ~> Traversal where
-  og (Traversal1 trav) = Traversal trav
+  oTo (Traversal1 trav) = Traversal trav
 
 instance Traversal1 ~> Fold1 where
-  og (Traversal1 trav) = Fold1 (\f -> getConst . trav (Const <$> f))
+  oTo (Traversal1 trav) = Fold1 (\f -> getConst . trav (Const <$> f))
 
 -- Transitive inclusions
-instance Traversal1 ~> Setter where og = og @Traversal . og
-instance Traversal1 ~> Fold   where og = og @Traversal . og
+instance Traversal1 ~> Setter where oTo = oTo @Traversal . oTo
+instance Traversal1 ~> Fold   where oTo = oTo @Traversal . oTo
 
 -- AffineTraversal ---------------------------------------------------------
 
 instance AffineTraversal ~> Traversal where
-  og (AffineTraversal unzip) = Traversal $ \f s -> case unzip s of
+  oTo (AffineTraversal unzip) = Traversal $ \f s -> case unzip s of
                                   Left t            -> pure t
                                   Right (a, review) -> review <$> f a
 
 instance AffineTraversal ~> AffineFold where
-  og (AffineTraversal unzip) = AffineFold (either (const Nothing) (Just . fst) <$> unzip)
+  oTo (AffineTraversal unzip) = AffineFold (either (const Nothing) (Just . fst) <$> unzip)
 
 -- Transitive inclusions
-instance AffineTraversal ~> Setter where og = og @Traversal . og
-instance AffineTraversal ~> Fold   where og = og @Traversal . og
+instance AffineTraversal ~> Setter where oTo = oTo @Traversal . oTo
+instance AffineTraversal ~> Fold   where oTo = oTo @Traversal . oTo
 
 -- Traversal ---------------------------------------------------------------
 
 instance Traversal ~> Setter where
-  og (Traversal trav) = Setter (\f s -> runIdentity $ trav (Identity <$> f) s)
+  oTo (Traversal trav) = Setter (\f s -> runIdentity $ trav (Identity <$> f) s)
 
 instance Traversal ~> Fold where
-  og (Traversal trav) = Fold (\f -> getConst . trav (Const <$> f))
+  oTo (Traversal trav) = Fold (\f -> getConst . trav (Const <$> f))
 
 -- Glass -------------------------------------------------------------------
 
 instance Glass ~> Setter where
-  og (Glass unzip) = Setter (\f s -> unzip s (\g -> f $ g s))
+  oTo (Glass unzip) = Setter (\f s -> unzip s (\g -> f $ g s))
 
 -- Kaleidoscope -------------------------------------------------------------
 
 instance Kaleidoscope ~> Setter where
-  og (Kaleidoscope collect) = Setter (\f s -> collect (f . head) [s])
+  oTo (Kaleidoscope collect) = Setter (\f s -> collect (f . head) [s])
 
 instance Kaleidoscope ~> Review where
-  og (Kaleidoscope collect) = Review (\b -> collect (const b) [])
+  oTo (Kaleidoscope collect) = Review (\b -> collect (const b) [])
 
 -- Getter -------------------------------------------------------------------
 
 instance Getter ~> Fold1 where
-  og (Getter get) = Fold1 $ \f s -> f (get s)
+  oTo (Getter get) = Fold1 $ \f s -> f (get s)
 
 instance Getter ~> AffineFold where
-  og (Getter get) = AffineFold (Just . get)
+  oTo (Getter get) = AffineFold (Just . get)
 
 -- Transitive inclusions
-instance Getter ~> Fold where og = og @Fold1 . og
+instance Getter ~> Fold where oTo = oTo @Fold1 . oTo
 
 -- Fold1 --------------------------------------------------------------------
 
 instance Fold1 ~> Fold where
-  og (Fold1 fold) = Fold fold
+  oTo (Fold1 fold) = Fold fold
 
 -- AffineFold ---------------------------------------------------------------
 
 instance AffineFold ~> Fold where
-  og (AffineFold unzip) = Fold $ \ f -> maybe mempty f . unzip
+  oTo (AffineFold unzip) = Fold $ \ f -> maybe mempty f . unzip
 
 -- Unknown -----------------------------------------------------------------
 
-instance a ~> Unknown where og _ = Unknown
+instance a ~> Unknown where oTo _ = Unknown
 
 ----------------------------------------------------------------------------
 -------------------------------- MEETS -------------------------------------
@@ -438,46 +430,45 @@ type family (:\/:) (l :: * -> * -> * -> * -> *) (r :: * -> * -> * -> * -> *) :: 
 ----------------------------- COMPOSITIONS ---------------------------------
 ----------------------------------------------------------------------------
 
-(>!>) :: Optic k s t x y -> Optic k x y a b -> Optic k s t a b
-Equality                 >!> Equality                   = Equality
-Iso  get review          >!> Iso get' review'           = Iso (get'.get) (review . review')
-Lens get put             >!> Lens get' put'             = Lens (get'.get)      $ \s b -> put s (put' (get s)     b)
-AlgLens get put          >!> AlgLens get' put'          = AlgLens (get' . get) $ \s b -> put s (put' (get <$> s) b)
-Prism matching review    >!> Prism matching' review'    = Prism (\s -> case matching s of
-                                                                        Left  t -> Left t
-                                                                        Right x -> case matching' x of
-                                                                          Left  y -> Left (review y)
-                                                                          Right a -> Right a
-                                                                ) (review . review')
-AlgPrism matching review >!> AlgPrism matching' review' = AlgPrism (\s -> case matching s of
-                                                                           Left  t -> Left t
-                                                                           Right x -> case matching' x of
-                                                                             Left  y -> Left ( review <$> y)
-                                                                             Right a -> Right a
-                                                                   ) (review . review')
-Grate unzip              >!> Grate unzip'               = Grate $ \f   -> unzip   (\g -> unzip'       (\g' -> f (g' . g)))
-Glass unzip              >!> Glass unzip'               = Glass $ \s f -> unzip s (\g -> unzip' (g s) (\g' -> f (g' . g)))
-AffineTraversal unzip    >!> AffineTraversal unzip'     = AffineTraversal $ \s -> case unzip s of
-                                                                                  Left t -> Left t
-                                                                                  Right (x, review) -> case unzip' x of
-                                                                                    Left  y            -> Left (review y)
-                                                                                    Right (a, review') -> Right (a, review . review')
-Traversal1 trav          >!> Traversal1 trav'           = Traversal1   $ trav . trav'
-Traversal trav           >!> Traversal trav'            = Traversal    $ trav . trav'
-AffineFold preview       >!> AffineFold preview'        = AffineFold   $ preview >=> preview'
-Fold1 folding            >!> Fold1 folding'             = Fold1        $ folding . folding'
-Fold folding             >!> Fold folding'              = Fold         $ folding . folding'
-Kaleidoscope collect     >!> Kaleidoscope collect'      = Kaleidoscope $ collect . collect'
-Setter over              >!> Setter over'               = Setter       $ over . over'
-Getter get               >!> Getter get'                = Getter       $ get' . get
-Review review            >!> Review review'             = Review       $ review . review'
-Unknown                  >!> Unknown                    = Unknown
+instance {-# OVERLAPPING #-} Composable' (Optic k) (Optic k) (Optic k) where
+  Equality                 %? Equality                   = Equality
+  Iso  get review          %? Iso get' review'           = Iso (get'.get) (review . review')
+  Lens get put             %? Lens get' put'             = Lens (get'.get)      $ \s b -> put s (put' (get s)     b)
+  AlgLens get put          %? AlgLens get' put'          = AlgLens (get' . get) $ \s b -> put s (put' (get <$> s) b)
+  Prism matching review    %? Prism matching' review'    = Prism (\s -> case matching s of
+                                                                          Left  t -> Left t
+                                                                          Right x -> case matching' x of
+                                                                            Left  y -> Left (review y)
+                                                                            Right a -> Right a
+                                                                  ) (review . review')
+  AlgPrism matching review %? AlgPrism matching' review' = AlgPrism (\s -> case matching s of
+                                                                            Left  t -> Left t
+                                                                            Right x -> case matching' x of
+                                                                              Left  y -> Left ( review <$> y)
+                                                                              Right a -> Right a
+                                                                    ) (review . review')
+  Grate unzip              %? Grate unzip'               = Grate $ \f   -> unzip   (\g -> unzip'       (\g' -> f (g' . g)))
+  Glass unzip              %? Glass unzip'               = Glass $ \s f -> unzip s (\g -> unzip' (g s) (\g' -> f (g' . g)))
+  AffineTraversal unzip    %? AffineTraversal unzip'     = AffineTraversal $ \s -> case unzip s of
+                                                                                    Left t -> Left t
+                                                                                    Right (x, review) -> case unzip' x of
+                                                                                      Left  y            -> Left (review y)
+                                                                                      Right (a, review') -> Right (a, review . review')
+  Traversal1 trav          %? Traversal1 trav'           = Traversal1   $ trav . trav'
+  Traversal trav           %? Traversal trav'            = Traversal    $ trav . trav'
+  AffineFold preview       %? AffineFold preview'        = AffineFold   $ preview >=> preview'
+  Fold1 folding            %? Fold1 folding'             = Fold1        $ folding . folding'
+  Fold folding             %? Fold folding'              = Fold         $ folding . folding'
+  Kaleidoscope collect     %? Kaleidoscope collect'      = Kaleidoscope $ collect . collect'
+  Setter over              %? Setter over'               = Setter       $ over . over'
+  Getter get               %? Getter get'                = Getter       $ get' . get
+  Review review            %? Review review'             = Review       $ review . review'
+  Unknown                  %? Unknown                    = Unknown
 
-(>?>) :: (l ~ Optic lo, r ~ Optic ro, l ~> o, r ~> o, o ~ Optic oo) => l s t x y -> r x y a b -> o s t a b
-l >?> r = og l >!> og r
+instance {-# OVERLAPPING #-} Composable (Optic k) (Optic k) (Optic k)
 
-(>.>) :: (l ~ Optic lo, r ~ Optic ro, l ~> o, r ~> o, o ~ (l :\/: r), o ~ Optic oo) => l s t x y -> r x y a b -> o s t a b
-(>.>) = (>?>)
+instance {-# OVERLAPPABLE #-} (o2 ~ o0 :\/: o1, o0 ~> o2, o1 ~> o2, Composable o2 o2 o2) => Composable o0 o1 o2 where
+  f % g = oTo @o0 @o2 f % oTo @o1 @o2 g
 
 ----------------------------------------------------------------------------
 ------------------------------- INSTANCES ----------------------------------
@@ -501,8 +492,3 @@ instance VLRepresentable Traversal1 where
   type VLConstraint Traversal1 f = (Apply f)
   toVL (Traversal1 trav) = trav
   fromVL = Traversal1
-
-instance VLRepresentable Setter where
-  type VLConstraint Setter f = (Settable f)
-  toVL (Setter over) f = pure . over (untainted . f)
-  fromVL d = Setter (\f -> runIdentity . d (Identity . f))

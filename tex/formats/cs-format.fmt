@@ -32,7 +32,7 @@
 
 %format <$> = "\fmap"
 %format $ = "\fapp"
-%format >.> = "\mathbin{\optcomp}"
+%format % = "\mathbin{\optcomp}"
 %format <.*> = "\mathbin{\boxast}"
 %format <*.> = "\mathbin{\boxast}"
 %format <.> = "\mathbin{\boxast}"

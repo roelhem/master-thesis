@@ -1,36 +1,7 @@
 module OptTh.Profunctor.Types where
-
-import Data.Profunctor
-import Data.Profunctor.Traversing
-import qualified OptTh.Types.Kinds as K
-import Data.Semigroup.Traversable (Traversable1)
-import Data.Functor.Apply (Apply)
-import Data.Pointed (Pointed)
-import Data.Bifunctor (Bifunctor)
-
-class Traversable f => Affine f where
-  affine :: b -> (a -> b) -> f a -> b
-  fromAffine :: a -> f a -> a
-
-class (Choice p, Strong p) => AffineTraversing p where
-  traverseAff' :: Affine f => p a b -> p (f a) (f b)
-  wanderAff :: (forall f. Pointed f => (a -> f b) -> s -> f t) -> p a b -> p s t
-
-class (Strong p) => Traversing1 p where
-  traverse1' :: Traversable1 f => p a b -> p (f a) (f b)
-  wander1 :: (forall f. Apply f => (a -> f b) -> s -> f t) -> p a b -> p s t
-
-class Profunctor p => Classifying p where
-  classify :: Applicative f => p a b -> p (f a) (f b)
-
-class Bicontravariant p where
-  contrabimap :: (b -> a) -> (d -> c) -> p a c -> p b d
-  contrabimap f g = contrafirst f . contrasecond g
-  contrafirst :: (b -> a) -> p a c -> p b c
-  contrafirst = flip contrabimap id
-  contrasecond :: (c -> b) -> p a b -> p a c
-  contrasecond = contrabimap id
-  {-# MINIMAL contrabimap|(contrafirst, contrasecond) #-}
+  
+import qualified OptTh.Kinds.Optics as K
+import OptTh.Common.Profunctor
 
 type family Constraint k p where
   Constraint K.Iso p             = (Profunctor p)

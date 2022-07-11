@@ -11,21 +11,16 @@ Provides combinators for the library of optics in terms of Tambara modules.
 
 module Vitrea.Combinators where
 
-import Prelude hiding (map)
-import Data.Function
-import Data.Either
-import Control.Monad.Writer hiding (Any)
-import Data.Functor.Identity
-import Data.Functor.Compose
-import Data.Void
-import Control.Monad
-import Data.Char
-import Data.List
-import Data.Monoid hiding (Any)
-import Text.Printf
+import OptTh.Prelude
 
 import Vitrea.Categories
-import Vitrea.Tambara
+    ( Kleisli(Kleisli),
+      Algebra(..),
+      App(..),
+      (:=>) (..),
+      Profunctor(..),
+      Any )
+import Vitrea.Tambara ( Tambara(..) )
 
 
 -- | Viewing is a profunctor that can be used to implement a 'view'
@@ -85,7 +80,7 @@ instance Profunctor Any (->) Any (->) (Aggregating a b) where
 instance Tambara Any (->) Any (->) (Algebra []) (->) (,) () (,) (,) (Aggregating a b) where
   tambara (Aggregate u) = Aggregate (\l f -> (algebra (fmap fst l) , u (fmap snd l) f))
 
-instance Tambara Any (->) Any (->) Applicative Nat Compose Identity App App (Aggregating a b) where
+instance Tambara Any (->) Any (->) Applicative (:=>) Compose Identity App App (Aggregating a b) where
   tambara (Aggregate h) = Aggregate (\u f -> App $ flip h f <$> traverse getApp u)
 
 -- | Updating is a Tambara module for the optics admitting an 'update' operator.
@@ -109,12 +104,12 @@ instance Tambara Any (->) Any (->) Any (->) (,) () (,) (,) (Replacing a b) where
   tambara (Replace u) = Replace (fmap . u)
 instance Tambara Any (->) Any (->) Any (->) Either Void Either Either (Replacing a b) where
   tambara (Replace u) = Replace (fmap . u)
-instance Tambara Any (->) Any (->) Functor Nat Compose Identity App App (Replacing a b) where
+instance Tambara Any (->) Any (->) Functor (:=>) Compose Identity App App (Replacing a b) where
   tambara (Replace u) = Replace ((\f -> App . fmap f . getApp) . u)
-instance Tambara Any (->) Any (->) Applicative Nat Compose Identity App App (Replacing a b) where
-  tambara = tambara @Any @(->) @Any @(->) @Functor @Nat @Compose @Identity @App @App @(Replacing a b)
-instance Tambara Any (->) Any (->) Traversable Nat Compose Identity App App (Replacing a b) where
-  tambara = tambara @Any @(->) @Any @(->) @Functor @Nat @Compose @Identity @App @App @(Replacing a b)
+instance Tambara Any (->) Any (->) Applicative (:=>) Compose Identity App App (Replacing a b) where
+  tambara = tambara @Any @(->) @Any @(->) @Functor @(:=>) @Compose @Identity @App @App @(Replacing a b)
+instance Tambara Any (->) Any (->) Traversable (:=>) Compose Identity App App (Replacing a b) where
+  tambara = tambara @Any @(->) @Any @(->) @Functor @(:=>) @Compose @Identity @App @App @(Replacing a b)
 
 
 -- | Inspired by the "view" operator of Kmett et al's lens library.  The

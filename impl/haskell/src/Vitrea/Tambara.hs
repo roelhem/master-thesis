@@ -17,20 +17,13 @@ Román ("Profunctor optics, a categorical update", 2019).
 
 module Vitrea.Tambara where
 
-import Prelude hiding (map)
-import Data.Function
-import Data.Either
-import Control.Monad.Writer hiding (Any)
-import Data.Functor.Identity
-import Data.Functor.Compose
-import Data.Void
-import Control.Monad
-import Data.Char
-import Data.List
-import Data.Monoid hiding (Any)
-import Text.Printf
+import OptTh.Prelude
 
 import Vitrea.Categories
+    ( MonoidalAction(..),
+      Profunctor(..),
+      Bifunctor(bimap),
+      Category(comp, unit) )
 
 -- | Unified definition of a mixed optic, enriched over Hask (from "Profunctor
 -- optics, a categorical update", Definition 2.1).

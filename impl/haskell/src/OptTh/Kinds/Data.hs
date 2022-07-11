@@ -1,5 +1,6 @@
 module OptTh.Kinds.Data where
 
+import OptTh.Prelude
 import Data.Functor.Identity (Identity)
 import Data.Data (Proxy)
 import Algebra.PartialOrd (PartialOrd (..))
@@ -68,31 +69,8 @@ instance AssociativeTensor Either where
 instance MonoidalTensor Either where
   type Unit Either = Void
   unitorLeft (Right b) = b
-  unitorLeft (Left a) = exFalso a
+  unitorLeft (Left a) = absurd a
   counitorLeft = Right
   unitorRight (Left a) = a
-  unitorRight (Right a) = exFalso a
+  unitorRight (Right a) = absurd a
   counitorRight = Left
-
-----------------------------------------------------------------------------
----------------------------------- VOID ------------------------------------
-----------------------------------------------------------------------------
-
-newtype Void = Void Void
-
-exFalso :: Void -> a
-exFalso = undefined
-
-exFalsoF :: Functor f => f Void -> f a
-exFalsoF = fmap exFalso
-
-deriving instance Generic Void
-
-instance Eq Void where
-  _ == _ = True
-
-instance Ord Void where
-  compare _ _ = EQ
-
-instance Show Void where
-  show = exFalso

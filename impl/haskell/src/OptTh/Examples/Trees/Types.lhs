@@ -13,6 +13,9 @@ module OptTh.Examples.Trees.Types ( Edges
                                   , BinTreeNode'
                                   , BinTree'
                                   ) where
+
+import OptTh.Prelude
+
 \end{code}
 %endif
 

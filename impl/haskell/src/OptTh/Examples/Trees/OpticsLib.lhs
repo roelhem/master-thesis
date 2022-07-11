@@ -2,11 +2,12 @@
 \begin{code}
 module OptTh.Examples.Trees.OpticsLib where
 
+import OptTh.Prelude
 import OptTh.Examples.Trees.Types
 import OptTh.Simple.Types
 import OptTh.Simple.Helpers
 import OptTh.Simple.Standard
-import Data.Functor.Apply ((<.*>), (<*.>), Apply, MaybeApply (MaybeApply))
+import Data.Functor.Apply ((<.*>), (<*.>), MaybeApply (..))
 \end{code}
 %endif
 
@@ -52,10 +53,10 @@ edges = _1 :: Lens (Node k c v) (Node k' c' v ) (Edges k c) (Edges k' c')
 We can compose the vertices Grate with the edges Lens to get a Glass that focusses on the children of the Node.
 
 \begin{code}
-children = edges >.> _coDom :: Glass (Node k c v) (Node k c' v) c c'
+children = edges % _coDom :: Glass (Node k c v) (Node k c' v) c c'
 
 childAt :: Eq k => k -> Lens' (Node k c v) c
-childAt k = edges >.> _evAt' k
+childAt k = edges % _evAt' k
 \end{code}
 
 \subsubsection{Tree}
@@ -82,28 +83,28 @@ Note that we cannot change the type of a leaf, as nodes can also contain leafs i
 leaves :: Setter (Tree k v l) (Tree k v l') l l'
 leaves = Setter $ \f -> \case 
        Leaf l -> Leaf (f l)
-       Node n -> Node (over (children >.> leaves) f n)
+       Node n -> Node (over (children % leaves) f n)
 \end{code}
 
 We can define a simmular setter for the node labels of the tree. However, it is more useful to define it on the TreeNode instead of the Tree. We can get the setter on the Tree by precomposing the node-prism.
 
 \begin{code}
 labels :: Setter (TreeNode k v l) (TreeNode k v' l) v v'
-labels = Setter (\f (e, v) -> (over (vertices >.> node >.> labels) f e, f v))
+labels = Setter (\f (e, v) -> (over (vertices % node % labels) f e, f v))
 \end{code}
 
 Finally, we can make a collection of lenses for each key path of a tree.
 
 \begin{code}
 nodeAt :: (Eq k, Foldable f) => f k -> AffineTraversal' (Tree k v l) (TreeNode k v l)
-nodeAt = foldr (\k o -> node >.> childAt k >.> o) (og node)
+nodeAt = foldr (\k o -> node % childAt k % o) (oTo node)
 \end{code}
 
 Simmulary, we have a Traversal over a path. When we start at a TreeNode, we even know for sure that it has a label. Therefore, we have a path1 that starts at the TreeNode.
 
 \begin{code}
 path1 :: (Eq k) => [k] -> Traversal1' (TreeNode k v l) v
-path1 []   = og label
+path1 []   = oTo label
 path1 (k:ks) = Traversal1 (\f s -> 
                 put (childAt k) 
                 <$> traversing1 label f s
@@ -111,7 +112,7 @@ path1 (k:ks) = Traversal1 (\f s ->
               )
 
 path :: (Eq k) => [k] -> Traversal' (Tree k v l) v
-path ks = node >.> path1 ks
+path ks = node % path1 ks
 \end{code}
 
 \subsection{Leaves with monoid values.}
@@ -141,8 +142,8 @@ vertexPair = Iso (\e -> (e False, e True)) $ \(l, r) -> \case
 
 \begin{code}
 leftVertex, rightVertex :: Lens' (BinEdges c) c
-leftVertex  = vertexPair >.> _1
-rightVertex = vertexPair >.> _2
+leftVertex  = vertexPair % _1
+rightVertex = vertexPair % _2
 \end{code}
 
 \begin{code}
@@ -153,7 +154,7 @@ rightChild = childAt True
 
 \begin{code}
 inOrder  :: Traversal  (BinTree v l)     (BinTree v' l)     v v'
-inOrder   = node >.> inOrder1
+inOrder   = node % inOrder1
 
 inOrder1 :: Traversal1 (BinTreeNode v l) (BinTreeNode v' l) v v'
 inOrder1 = Traversal1 $ \f x -> 
@@ -164,20 +165,20 @@ inOrder1 = Traversal1 $ \f x ->
 
 
 preOrder :: (Bounded k, Enum k) => Traversal (Tree k v l) (Tree k v' l) v v'
-preOrder  = node >.> preOrder1
+preOrder  = node % preOrder1
 
 preOrder1 :: (Bounded k, Enum k) => Traversal1 (TreeNode k v l) (TreeNode k v' l) v v'
 preOrder1 = Traversal1 $ \f x -> 
                       (\ v e -> (e,v))
                       <$> f         (get label      x)
-                      <.*> travMaybe (_img >.> preOrder) f (get edges  x)
+                      <.*> travMaybe (_img % preOrder) f (get edges  x)
 
 postOrder :: (Bounded k, Enum k) => Traversal (Tree k v l) (Tree k v' l) v v'
-postOrder = node >.> postOrder1
+postOrder = node % postOrder1
 
 postOrder1 :: (Bounded k, Enum k) => Traversal1 (TreeNode k v l) (TreeNode k v' l) v v'
 postOrder1 = Traversal1 $ \f x ->
                       (,) 
-                      <$> travMaybe (_img >.> preOrder) f (get edges  x)
+                      <$> travMaybe (_img % preOrder) f (get edges  x)
                       <*.> f         (get label      x)
 \end{code}
