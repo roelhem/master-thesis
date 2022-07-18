@@ -14,27 +14,31 @@ data KindDef = KindDef { name :: String
                        }
 
 kindDefs :: [KindDef]
-kindDefs = [ KindDef "Equality"        True  False
-           , KindDef "Iso"             True  True
-           , KindDef "Lens"            True  True
-           , KindDef "ReversedLens"    True  True
-           , KindDef "AlgLens"         False False
-           , KindDef "Prism"           True  True
-           , KindDef "ReversedPrism"   True  True
-           , KindDef "AlgPrism"        False False
-           , KindDef "Traversal"       True  True
-           , KindDef "Traversal1"      True  False
-           , KindDef "AffineTraversal" True  True
-           , KindDef "Fold"            True  True
-           , KindDef "Fold1"           True  False
-           , KindDef "AffineFold"      True  True
-           , KindDef "Setter"          True  True
-           , KindDef "Getter"          True  True
-           , KindDef "Review"          True  True
-           , KindDef "Grate"           True  False
-           , KindDef "Glass"           True  False
-           , KindDef "Kaleidoscope"    True  False
-           , KindDef "Unknown"         True  False
+kindDefs = [ KindDef "Equality"            True   False
+           , KindDef "Iso"                 True   True
+           , KindDef "Lens"                True   True
+           , KindDef "ReversedLens"        True   True
+           , KindDef "AlgLens"             False  False
+           , KindDef "Prism"               True   True
+           , KindDef "ReversedPrism"       True   True
+           , KindDef "AlgPrism"            False  False
+           , KindDef "Traversal"           True   True
+           , KindDef "ReversedTraversal"   True   False
+           , KindDef "Traversal1"          True   False
+           , KindDef "ReversedTraversal1"  True   False
+           , KindDef "AffineTraversal"     True   True
+           , KindDef "Fold"                True   True
+           , KindDef "Fold1"               True   False
+           , KindDef "AffineFold"          True   True
+           , KindDef "Setter"              True   True
+           , KindDef "Getter"              True   True
+           , KindDef "Review"              True   True
+           , KindDef "Grate"               True   False
+           , KindDef "Glass"               True   False
+           , KindDef "Kaleidoscope"        True   False
+           , KindDef "Kaleidoscope1"       True   False
+           , KindDef "AffineKaleidoscope"  True   False
+           , KindDef "Unknown"             True   False
            ]
 
 ----------------------------------------------------------------------------

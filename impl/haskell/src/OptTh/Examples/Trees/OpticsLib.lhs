@@ -39,6 +39,7 @@ However, if the edge indices are comparable, we can have a lens that for each ve
 \begin{code}
 vertexAt :: Eq k => k -> Lens' (Edges k v) v
 vertexAt = _evAt'
+
 \end{code}
 
 \subsubsection{Nodes}

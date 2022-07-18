@@ -15,10 +15,12 @@ build-type:     Simple
 library
   exposed-modules:
       OptTh.Common
+      OptTh.Common.Cardinalities
       OptTh.Common.Categories
       OptTh.Common.Constraints
       OptTh.Common.Functor
       OptTh.Common.Profunctor
+      OptTh.Common.Staby
       OptTh.Examples.OpticsLib.Trees
       OptTh.Examples.Trees.OpticsLib
       OptTh.Examples.Trees.SimpleLib
@@ -27,6 +29,7 @@ library
       OptTh.Kinds.Optics
       OptTh.Kinds.TH
       OptTh.Prelude
+      OptTh.Profunctor.Convert
       OptTh.Profunctor.Types
       OptTh.Simple.Helpers
       OptTh.Simple.Standard
@@ -53,6 +56,7 @@ library
       FlexibleInstances
       FunctionalDependencies
       GADTs
+      GeneralizedNewtypeDeriving
       ImplicitParams
       KindSignatures
       LambdaCase
@@ -75,6 +79,7 @@ library
       TypeFamilies
       TypeOperators
       TypeSynonymInstances
+      DeriveDataTypeable
       UndecidableInstances
       UndecidableSuperClasses
   build-depends:
@@ -88,7 +93,9 @@ library
     , distributive
     , exceptions
     , filepath
+    , free
     , generic-lens
+    , kan-extensions
     , lattices
     , lens
     , megaparsec

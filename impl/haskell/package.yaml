@@ -25,6 +25,8 @@ dependencies:
   - data-default
   - bytestring
   - text
+  - free
+  - kan-extensions
   - wreq
   - vector-sized
   - semigroupoids
@@ -50,6 +52,7 @@ default-extensions:
   - FlexibleInstances
   - FunctionalDependencies
   - GADTs
+  - GeneralizedNewtypeDeriving
   - ImplicitParams
   - KindSignatures
   - LambdaCase
@@ -72,6 +75,7 @@ default-extensions:
   - TypeFamilies
   - TypeOperators
   - TypeSynonymInstances
+  - DeriveDataTypeable
   - UndecidableInstances
   - UndecidableSuperClasses
 

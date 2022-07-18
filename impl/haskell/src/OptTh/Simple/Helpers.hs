@@ -30,7 +30,7 @@ matching :: (o ~> AffineTraversal) => o s t a b -> (s -> Either t a)
 matching o = case oTo @_ @AffineTraversal o of AffineTraversal f -> fmap fst <$> f
 
 -- Traversal --
-traversing :: (o ~> Traversal) => o s t a b -> (forall f. (Apply f, Applicative f) => (a -> f b) -> s -> f t)
+traversing :: (o ~> Traversal) => o s t a b -> (forall f. (Pointed f, Apply f, Applicative f) => (a -> f b) -> s -> f t)
 traversing o = case oTo @_ @Traversal o of Traversal f -> f
 
 travMaybe :: (o ~> Traversal) => o s t a b -> (forall f. Apply f => (a -> f b) -> s -> MaybeApply f t)
@@ -45,7 +45,7 @@ preview :: (o ~> AffineFold) => o s t a b -> (s -> Maybe a)
 preview o = case oTo @_ @AffineFold o of AffineFold f -> f
 
 -- Fold --
-foldMapOf :: (o ~> Fold) => o s t a b -> (forall m. Monoid m => (a -> m) -> s -> m)
+foldMapOf :: (o ~> Fold) => o s t a b -> (forall m. (Default m, Monoid m) => (a -> m) -> s -> m)
 foldMapOf o = case oTo @_ @Fold o of Fold f -> f
 
 toListOf :: (o ~> Fold) => o s t a b -> s -> [a]
@@ -57,7 +57,7 @@ foldrOf o f x s = appEndo (foldMapOf o (Endo . f) s) x
 foldlOf :: (o ~> Fold) => o s t a b -> (x -> a -> x) -> x -> s -> x
 foldlOf o f x s = appEndo (getDual (foldMapOf o (Dual . Endo . flip f) s)) x
 
-foldOf :: (o ~> Fold, Monoid a) => o s t a b -> s -> a
+foldOf :: (o ~> Fold, Default a, Monoid a) => o s t a b -> s -> a
 foldOf o = foldMapOf o id
 
 lengthOf :: (o ~> Fold) => o s t a b -> s -> Int

@@ -6,6 +6,7 @@ module OptTh.Prelude ( module Prelude
                      , module Data.Void
                      , module OptTh.Common
                      , module GHC.Base
+                     , module Data.Default
                      ) where
 
 import Prelude hiding ( (.)
@@ -17,6 +18,7 @@ import Data.Functor.Compose (Compose(..))
 import Data.Void (Void(..), absurd, vacuous)
 import Data.Tuple (swap)
 import GHC.Base (NonEmpty (..))
+import Data.Default (Default (..))
 
 import OptTh.Common ( Apply
                     , Traversable1(..)
