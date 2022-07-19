@@ -8,7 +8,7 @@ import Control.Comonad (Comonad (extract))
 import Control.Applicative (Const(..))
 import Data.Kind (Constraint)
 import Control.Monad ((>=>))
-import OptTh.Common.Categories (Composable (..), Composable' (..), type (~>) (..))
+import OptTh.Common.Categories (Composable (..), type (~>) (..))
 import OptTh.Common.Profunctor
 import OptTh.Common.Staby
 import OptTh.Common.Cardinalities
@@ -808,54 +808,55 @@ type family (:\/:) (l :: * -> * -> * -> * -> *) (r :: * -> * -> * -> * -> *) :: 
   l                  :\/: r                  = r :\/: l
 
 ----------------------------------------------------------------------------
---------------------------- VIEW CONSTRAINT --------------------------------
+----------------------------- COMPOSITION ----------------------------------
 ----------------------------------------------------------------------------
 
-----------------------------------------------------------------------------
------------------------------ COMPOSITIONS ---------------------------------
-----------------------------------------------------------------------------
-
-instance {-# OVERLAPPING #-} Composable' (Optic k) (Optic k) (Optic k) where
-  Equality                 %? Equality                   = Equality
-  Iso  get review          %? Iso get' review'           = Iso (get'.get) (review . review')
-  Lens get put             %? Lens get' put'             = Lens (get'.get)      $ \s b -> put s (put' (get s)     b)
-  AlgLens get put          %? AlgLens get' put'          = AlgLens (get' . get) $ \s b -> put s (put' (get <$> s) b)
-  Prism matching review    %? Prism matching' review'    = Prism (\s -> case matching s of
+instance {-# OVERLAPPING #-} Composable (Optic k) (Optic k) (Optic k) where
+  Equality                 % Equality                   = Equality
+  Iso  get review          % Iso get' review'           = Iso (get'.get) (review . review')
+  Lens get put             % Lens get' put'             = Lens (get'.get)      $ \s b -> put s (put' (get s)     b)
+  AlgLens get put          % AlgLens get' put'          = AlgLens (get' . get) $ \s b -> put s (put' (get <$> s) b)
+  Prism matching review    % Prism matching' review'    = Prism (\s -> case matching s of
                                                                           Left  t -> Left t
                                                                           Right x -> case matching' x of
                                                                             Left  y -> Left (review y)
                                                                             Right a -> Right a
                                                                   ) (review . review')
-  AlgPrism matching review %? AlgPrism matching' review' = AlgPrism (\s -> case matching s of
+  AlgPrism matching review % AlgPrism matching' review' = AlgPrism (\s -> case matching s of
                                                                             Left  t -> Left t
                                                                             Right x -> case matching' x of
                                                                               Left  y -> Left ( review <$> y)
                                                                               Right a -> Right a
                                                                     ) (review . review')
-  Grate unzip              %? Grate unzip'               = Grate $ \f   -> unzip   (\g -> unzip'       (\g' -> f (g' . g)))
-  Glass unzip              %? Glass unzip'               = Glass $ \s f -> unzip s (\g -> unzip' (g s) (\g' -> f (g' . g)))
-  AffineTraversal unzip    %? AffineTraversal unzip'     = AffineTraversal $ \s -> case unzip s of
+  Grate unzip              % Grate unzip'               = Grate $ \f   -> unzip   (\g -> unzip'       (\g' -> f (g' . g)))
+  Glass unzip              % Glass unzip'               = Glass $ \s f -> unzip s (\g -> unzip' (g s) (\g' -> f (g' . g)))
+  AffineTraversal unzip    % AffineTraversal unzip'     = AffineTraversal $ \s -> case unzip s of
                                                                                     Left t -> Left t
                                                                                     Right (x, review) -> case unzip' x of
                                                                                       Left  y            -> Left (review y)
                                                                                       Right (a, review') -> Right (a, review . review')
-  Traversal1 trav          %? Traversal1 trav'           = Traversal1         $ trav . trav'
-  Traversal trav           %? Traversal trav'            = Traversal          $ trav . trav'
-  AffineFold preview       %? AffineFold preview'        = AffineFold         $ preview >=> preview'
-  Fold1 folding            %? Fold1 folding'             = Fold1              $ folding . folding'
-  Fold folding             %? Fold folding'              = Fold               $ folding . folding'
-  Getter get               %? Getter get'                = Getter             $ get' . get
-  Kaleidoscope agg         %? Kaleidoscope agg'          = Kaleidoscope       $ agg . agg'
-  Kaleidoscope1 agg        %? Kaleidoscope1 agg'         = Kaleidoscope1      $ agg . agg'
-  AffineKaleidoscope agg   %? AffineKaleidoscope agg'    = AffineKaleidoscope $ agg . agg'
-  Setter over              %? Setter over'               = Setter             $ over . over'
-  Review review            %? Review review'             = Review             $ review . review'
-  Unknown                  %? Unknown                    = Unknown
-
-instance {-# OVERLAPPING #-} Composable (Optic k) (Optic k) (Optic k)
+  Traversal1 trav          % Traversal1 trav'           = Traversal1         $ trav . trav'
+  Traversal trav           % Traversal trav'            = Traversal          $ trav . trav'
+  AffineFold preview       % AffineFold preview'        = AffineFold         $ preview >=> preview'
+  Fold1 folding            % Fold1 folding'             = Fold1              $ folding . folding'
+  Fold folding             % Fold folding'              = Fold               $ folding . folding'
+  Getter get               % Getter get'                = Getter             $ get' . get
+  Kaleidoscope agg         % Kaleidoscope agg'          = Kaleidoscope       $ agg . agg'
+  Kaleidoscope1 agg        % Kaleidoscope1 agg'         = Kaleidoscope1      $ agg . agg'
+  AffineKaleidoscope agg   % AffineKaleidoscope agg'    = AffineKaleidoscope $ agg . agg'
+  Setter over              % Setter over'               = Setter             $ over . over'
+  Review review            % Review review'             = Review             $ review . review'
+  Unknown                  % Unknown                    = Unknown
 
 instance {-# OVERLAPPABLE #-} (o2 ~ o0 :\/: o1, o0 ~> o2, o1 ~> o2, Composable o2 o2 o2) => Composable o0 o1 o2 where
   f % g = oTo @o0 @o2 f % oTo @o1 @o2 g
+
+----------------------------------------------------------------------------
+----------------------------- COMPOSITIONS ---------------------------------
+----------------------------------------------------------------------------
+
+instance (Equality ~> Optic k) => ProCategory (Optic k) where 
+  id2 = oTo @Equality @(Optic k) Equality
 
 ----------------------------------------------------------------------------
 ------------------------------- INSTANCES ----------------------------------

@@ -21,6 +21,7 @@ library
       OptTh.Common.Functor
       OptTh.Common.Profunctor
       OptTh.Common.Staby
+      OptTh.Examples.Comonad.HarborProblem
       OptTh.Examples.OpticsLib.Trees
       OptTh.Examples.Trees.OpticsLib
       OptTh.Examples.Trees.SimpleLib
@@ -28,12 +29,15 @@ library
       OptTh.Kinds.Data
       OptTh.Kinds.Optics
       OptTh.Kinds.TH
+      OptTh.Mixed.Category
       OptTh.Prelude
       OptTh.Profunctor.Convert
       OptTh.Profunctor.Types
       OptTh.Simple.Helpers
+      OptTh.Simple.Helpers.Comonad
       OptTh.Simple.Standard
       OptTh.Simple.Types
+      OptTh.VanLaarhoven.Helpers.Comonad
       OptTh.VanLaarhoven.Types
       Vitrea.Categories
       Vitrea.Combinators

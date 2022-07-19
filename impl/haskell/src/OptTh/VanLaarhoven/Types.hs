@@ -8,6 +8,13 @@ import OptTh.Common.Functor (Settable)
 --------------------- LENS-LIKE VAN-LAARHOVEN OPTICS -----------------------
 ----------------------------------------------------------------------------
 
+type VL       g s t a b = (  a -> g b) -> (  s -> g t)
+type CoVL   f   s t a b = (f a ->   b) -> (f s ->   t)
+type ProVL  f g s t a b = (f a -> g b) -> (f s -> g t)
+type VL'      g s   a   = VL      g s s a a
+type CoVL'  f   s   a   = CoVL  f   s s a a
+type ProVL' f g s   a   = ProVL f g s s a a
+
 type family VLConstraint (k :: K.OpticKind) f where
   VLConstraint K.Lens f            = (Functor f)
   VLConstraint K.AffineTraversal f = (Functor f, Pointed f)

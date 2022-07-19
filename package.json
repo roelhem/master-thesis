@@ -1,0 +1,21 @@
+{
+  "name": "thesis",
+  "version": "1.0.0",
+  "description": "My MSc thesis about optics.",
+  "main": "web/main.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/roelhem/master-thesis.git"
+  },
+  "author": "Roel Hemerik",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/roelhem/master-thesis/issues"
+  },
+  "homepage": "https://github.com/roelhem/master-thesis#readme"
+}

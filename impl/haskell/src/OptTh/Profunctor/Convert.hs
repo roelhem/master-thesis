@@ -4,11 +4,14 @@ import OptTh.Prelude
 import OptTh.Common.Profunctor
 import OptTh.Profunctor.Types
 import qualified OptTh.Simple.Types as S
+import qualified OptTh.Simple.Helpers as SH
+import qualified OptTh.Kinds.Optics as K
 import OptTh.Common.Functor
 import OptTh.Common.Cardinalities
 import Data.Pointed ()
 import Data.Functor.Apply (WrappedApplicative(..))
 import Data.Foldable (Foldable(..))
+import OptTh.Common.Staby
 
 toProf :: S.Optic k s t a b -> Optic k s t a b
 toProf S.Equality                    = id
@@ -26,9 +29,18 @@ toProf (S.Kaleidoscope agg)          = aggregating    (generalizeAgg @"*" agg)
 toProf (S.Kaleidoscope1 agg)         = aggregating1   (generalizeAgg @"+" agg)
 toProf (S.AffineKaleidoscope agg)    = aggregatingAff (generalizeAgg @"?" agg)
 toProf (S.Setter over)               = roam over
-toProf (S.Getter view)               = dimap view undefined -- TODO: Remove Undefined
+toProf (S.Getter view)               = dimap view undefined                                       -- TODO: Remove Undefined
 toProf (S.Fold folding)              = contrabimap (folding $ cpoint @"*") (const []) . traverse' -- TODO: Remove Undefined
-toProf (S.Fold1 folding)             = dimap (folding $ cpoint @"+") undefined . traverse1' -- TODO: Remove Undefined
-toProf (S.AffineFold folding)        = contrabimap folding undefined . traverseAff' -- TODO: Remove Undefined
-toProf (S.Review review)             = dimap undefined review -- TODO: Remove Undefined
+toProf (S.Fold1 folding)             = dimap (folding $ cpoint @"+") undefined . traverse1'       -- TODO: Remove Undefined
+toProf (S.AffineFold folding)        = contrabimap folding undefined . traverseAff'               -- TODO: Remove Undefined
+toProf (S.Review review)             = dimap undefined review                                     -- TODO: Remove Undefined
 toProf S.Unknown                     = unright . bimap (const $ Left ()) (const $ Left ())
+
+fromProf :: (ProCategory (S.Optic k), Constraints k (ABST (S.Optic k) a b)) => Optic k s t a b -> S.Optic k s t a b
+fromProf p = unABST . p $ id2
+
+{-
+
+
+
+-}

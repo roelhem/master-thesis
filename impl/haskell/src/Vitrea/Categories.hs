@@ -23,6 +23,10 @@ import Control.Arrow (Kleisli(..))
 import OptTh.Common.Categories
 import OptTh.Common.Constraints ( Any )
 
+class Category objc o where
+  unit :: objc c => o c c
+  comp :: (objc a, objc b, objc c) => o b c -> o a b -> o a c
+
 -- | Functors.
 class ( Category objc c, Category objd d
       , forall x . objc x => objd (f x)
@@ -71,6 +75,20 @@ class ( MonoidalCategory objm m o i
                 => c (f (p `o` q) x) (f p (f q x))
 
 newtype App f a = App { getApp :: f a }
+
+instance Category Any (->) where
+  unit = id
+  comp = (.)
+
+instance Category Functor (:=>) where
+  unit = Nat id
+  comp (Nat h) (Nat k) = Nat (h . k)
+instance Category Applicative (:=>) where
+  unit = unit @Functor
+  comp = comp @Functor
+instance Category Traversable (:=>) where
+  unit = unit @Functor
+  comp = comp @Functor
 
 instance Bifunctor Any (->) Any (->) Any (->) (,) where
   bimap f g (x,y) = (f x , g y)

@@ -26,7 +26,7 @@ import OptTh.Common ( Apply
                     , Pointed
                     , Copointed
                     , Foldable1(..)
-                    , Composable'(..)
                     , Composable(..)
+                    , ProCategory(..)
                     , type (~>) (..)
                     )
